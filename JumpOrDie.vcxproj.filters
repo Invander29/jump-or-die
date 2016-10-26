@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>{7a7cc576-7e0b-4172-89d2-929154979dba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{4d7881e9-b381-42ae-99e1-b8f0a11abf13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics">
+      <UniqueIdentifier>{9ef64179-b764-475f-b756-faa997711f8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Input">
+      <UniqueIdentifier>{fe454994-c59e-43d4-812d-28d990eb1b6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Managers">
+      <UniqueIdentifier>{45c3963b-8706-48f2-b1c5-6f0a54955009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Models">
+      <UniqueIdentifier>{4780e4b1-0ce6-46af-8b22-08349db550a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scenes">
+      <UniqueIdentifier>{02b246e2-f2ed-4205-9695-ea0ff9d31428}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Utils">
+      <UniqueIdentifier>{c596c29e-0d9a-4a0a-a427-8602b8287bf0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="external\lodepng.cpp">
+      <Filter>External</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameScene.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Engine\Core.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Utils\FileReader.cpp">
+      <Filter>Engine\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Utils\Timer.cpp">
+      <Filter>Engine\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Utils\Utils.cpp">
+      <Filter>Engine\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Scenes\Scene.cpp">
+      <Filter>Engine\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Models\CubeTexture.cpp">
+      <Filter>Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Models\Floor.cpp">
+      <Filter>Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Models\GameObject.cpp">
+      <Filter>Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Models\Model.cpp">
+      <Filter>Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Models\Cube.cpp">
+      <Filter>Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Models\CubeColor.cpp">
+      <Filter>Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Managers\SceneManager.cpp">
+      <Filter>Engine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Managers\ShaderManager.cpp">
+      <Filter>Engine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Managers\ResourceManager.cpp">
+      <Filter>Engine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Input\Mouse.cpp">
+      <Filter>Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Input\Keyboard.cpp">
+      <Filter>Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Graphics\Texture.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Models\FloorTexture.cpp">
+      <Filter>Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Models\FloorColor.cpp">
+      <Filter>Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Scenes\Camera.cpp">
+      <Filter>Engine\Scenes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\GameScene.h" />
+    <ClInclude Include="external\lodepng.h">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Utils\Utils.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Utils\FileReader.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Utils\Timer.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Scenes\Scene.h">
+      <Filter>Engine\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Models\CubeTexture.h">
+      <Filter>Engine\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Models\Floor.h">
+      <Filter>Engine\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Models\GameObject.h">
+      <Filter>Engine\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Models\Model.h">
+      <Filter>Engine\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Models\Cube.h">
+      <Filter>Engine\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Models\CubeColor.h">
+      <Filter>Engine\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Managers\SceneManager.h">
+      <Filter>Engine\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Managers\ShaderManager.h">
+      <Filter>Engine\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Managers\ResourceManager.h">
+      <Filter>Engine\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Input\Mouse.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Input\Keyboard.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\Texture.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Models\FloorTexture.h">
+      <Filter>Engine\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Models\FloorColor.h">
+      <Filter>Engine\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Scenes\Camera.h">
+      <Filter>Engine\Scenes</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
