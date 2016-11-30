@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <SDL2/SDL.h>
 #include <glm/vec2.hpp>
+#include <cstdint>
 
 namespace Input {
 
@@ -17,79 +17,51 @@ namespace Input {
 		explicit Mouse();
 		~Mouse();
 
-		/**
-		 * Init values
-		 * @return true if success
-		 */
-		bool init();
-
-		/**
-		 * Update state of mouse
-		 */
-		void update();
-
-		/**
-		 * Process events
-		 * @param event event from SDL
-		 */
-		void receiveEvent(const SDL_Event& event);
+		void onButtonDown(int button);
+		void onButtonUp(int button);
+		void onMove(double x, double y);
+		void onNextFrame();
 
 		/**
 		 * Get mouse X, Y position
 		 * @return position of mouse
 		 */
-		const glm::vec2 getPosition() const;
+		glm::vec2 position() const { return mPosition; }
 
 		/**
 		 * Get mouse move
 		 * @return difference of previous position and current
 		 */
-		const glm::vec2 getMove() const;
+		glm::vec2 lastMove() const { return mPosition - mLastPosition; }
 
 		/**
 		 * Check if mouse button was triggered
 		 * @param button code of button
 		 * @return true if mouse button was triggered
 		 */
-		bool isButtonTrigered(const Uint32 button) const;
+		bool isButtonTrigered(int button) const;
 
 		/**
 		 * Check if mouse button is pressed
 		 * @param button code of button
 		 * @return true if mouse button is pressed
 		 */
-		bool isButtonPressed(const Uint32 button) const;
+		bool isButtonPressed(int button) const;
 
 		/**
 		 * Check if mouse button was released
 		 * @param button code of button
 		 * @return true if mouse button was released
 		 */
-		bool isButtonReleased(const Uint32 button) const;
-
-		/**
-		 * Check for wheel move
-		 * @return diff of mouse wheel
-		 */
-		int getWheelX() const;
-
-		/**
-		 * Check for wheel move
-		 * @return diff of mouse wheel
-		 */
-		int getWheelY() const;
+		bool isButtonReleased(int button) const;
 
 	private:
-		int mCurrentX;
-		int mCurrentY;
-		Uint32 mCurrentState;
+		glm::vec2 mPosition;
+		glm::vec2 mLastPosition;
 
-		int mPrevX;
-		int mPrevY;
-		Uint32 mPrevState;
-
-		Sint32 mWheelX;
-		Sint32 mWheelY;
+		static const int BUTTON_COUNT = 10;
+		bool mDown[BUTTON_COUNT];
+		bool mChange[BUTTON_COUNT];
 	};
 
 }

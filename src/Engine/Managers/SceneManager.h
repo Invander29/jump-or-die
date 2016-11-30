@@ -5,7 +5,6 @@
 #pragma once
 
 #include "../Scenes/Scene.h"
-#include "ShaderManager.h"
 
 namespace Managers {
 
@@ -25,7 +24,7 @@ namespace Managers {
 		 * Get active scene
 		 * @return active scene
 		 */
-		Scenes::spScene get() const;
+		Scenes::spScene active() const;
 
 		/**
 		 * Update active scene

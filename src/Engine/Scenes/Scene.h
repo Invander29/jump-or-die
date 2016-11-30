@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 
+#include "../Utils/Basics.h"
 #include "../Models/GameObject.h"
 #include "Camera.h"
 
@@ -40,7 +41,7 @@ namespace Scenes {
 		 * Get camera from scene
 		 * @return Reference to camera
 		 */
-		Camera& getCamera() { return mCamera; }
+		Camera& camera() { return mCamera; }
 
 		/**
 		 * Called when scene needs to prepare objects
@@ -78,7 +79,7 @@ namespace Scenes {
 		Camera mCamera;
 	};
 
-// Make as smart pointer
+	// Make as smart pointer
 	MAKE_SMART(Scene);
 
 }

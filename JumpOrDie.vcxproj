@@ -71,16 +71,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>$(ProjectName)d</TargetName>
+    <OutDir>$(SolutionDir)build\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(PlatformTarget)\Tmp\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)build\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(PlatformTarget)\Tmp\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)build\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(PlatformTarget)\Tmp\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)build\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(PlatformTarget)\Tmp\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -89,14 +96,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\external;.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;SDL2maind.lib;SDL2d.lib;glew32sd.lib;winmm.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>.\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -106,14 +112,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_gfx.lib;winmm.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>.\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -125,17 +130,16 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\external;.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;SDL2main.lib;SDL2.lib;glew32s.lib;winmm.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>.\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -147,27 +151,29 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_gfx.lib;winmm.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>.\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="external\lodepng.cpp" />
-    <ClCompile Include="src\Engine\Core.cpp" />
+    <ClCompile Include="3rdParty\src\gl3w\gl3w.c" />
+    <ClCompile Include="3rdParty\src\lodepng\lodepng.cpp" />
+    <ClCompile Include="src\Car.cpp" />
+    <ClCompile Include="src\Engine\Application.cpp" />
     <ClCompile Include="src\Engine\Graphics\Texture.cpp" />
     <ClCompile Include="src\Engine\Input\Keyboard.cpp" />
     <ClCompile Include="src\Engine\Input\Mouse.cpp" />
     <ClCompile Include="src\Engine\Managers\ResourceManager.cpp" />
     <ClCompile Include="src\Engine\Managers\SceneManager.cpp" />
     <ClCompile Include="src\Engine\Managers\ShaderManager.cpp" />
+    <ClCompile Include="src\Engine\ModelLoader.cpp" />
     <ClCompile Include="src\Engine\Models\Cube.cpp" />
     <ClCompile Include="src\Engine\Models\CubeColor.cpp" />
     <ClCompile Include="src\Engine\Models\CubeTexture.cpp" />
@@ -176,23 +182,28 @@
     <ClCompile Include="src\Engine\Models\FloorTexture.cpp" />
     <ClCompile Include="src\Engine\Models\GameObject.cpp" />
     <ClCompile Include="src\Engine\Models\Model.cpp" />
+    <ClCompile Include="src\Engine\Models\Triangle.cpp" />
     <ClCompile Include="src\Engine\Scenes\Camera.cpp" />
     <ClCompile Include="src\Engine\Scenes\Scene.cpp" />
     <ClCompile Include="src\Engine\Utils\FileReader.cpp" />
     <ClCompile Include="src\Engine\Utils\Timer.cpp" />
-    <ClCompile Include="src\Engine\Utils\Utils.cpp" />
+    <ClCompile Include="src\Engine\Utils\Message.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\TraficSign.cpp" />
+    <ClCompile Include="src\Tree.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="external\lodepng.h" />
-    <ClInclude Include="src\Engine\Core.h" />
+    <ClInclude Include="src\Car.h" />
+    <ClInclude Include="src\Engine\Application.h" />
     <ClInclude Include="src\Engine\Graphics\Texture.h" />
     <ClInclude Include="src\Engine\Input\Keyboard.h" />
     <ClInclude Include="src\Engine\Input\Mouse.h" />
     <ClInclude Include="src\Engine\Managers\ResourceManager.h" />
     <ClInclude Include="src\Engine\Managers\SceneManager.h" />
     <ClInclude Include="src\Engine\Managers\ShaderManager.h" />
+    <ClInclude Include="src\Engine\ModelLoader.h" />
     <ClInclude Include="src\Engine\Models\Cube.h" />
     <ClInclude Include="src\Engine\Models\CubeColor.h" />
     <ClInclude Include="src\Engine\Models\CubeTexture.h" />
@@ -201,12 +212,17 @@
     <ClInclude Include="src\Engine\Models\FloorTexture.h" />
     <ClInclude Include="src\Engine\Models\GameObject.h" />
     <ClInclude Include="src\Engine\Models\Model.h" />
+    <ClInclude Include="src\Engine\Models\Triangle.h" />
     <ClInclude Include="src\Engine\Scenes\Camera.h" />
     <ClInclude Include="src\Engine\Scenes\Scene.h" />
+    <ClInclude Include="src\Engine\Utils\Basics.h" />
     <ClInclude Include="src\Engine\Utils\FileReader.h" />
     <ClInclude Include="src\Engine\Utils\Timer.h" />
-    <ClInclude Include="src\Engine\Utils\Utils.h" />
+    <ClInclude Include="src\Engine\Utils\Message.h" />
     <ClInclude Include="src\GameScene.h" />
+    <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\TraficSign.h" />
+    <ClInclude Include="src\Tree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

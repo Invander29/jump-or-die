@@ -12,7 +12,7 @@ Timer::~Timer()
 {
 }
 
-double Timer::getDelta()
+double Timer::delta()
 {
 	using namespace std::chrono;
 	auto currentTime = high_resolution_clock::now();

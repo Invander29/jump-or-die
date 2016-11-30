@@ -4,9 +4,7 @@
 
 #pragma once
 
-#include <glm/detail/type_mat.hpp>
-#include <glm/vec3.hpp>
-#include <glm/detail/type_mat4x4.hpp>
+#include <glm/glm.hpp>
 
 namespace Scenes {
 
@@ -83,7 +81,7 @@ namespace Scenes {
 		 * Get current matrix
 		 * @return precomputed matrix
 		 */
-		glm::mat4 getMatrix() const { return mMatrix; }
+		glm::mat4 matrix() const { return mMatrix; }
 
 	private:
 		glm::mat4 mPerspective;

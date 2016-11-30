@@ -4,11 +4,10 @@
 
 #pragma once
 
-#include <string>
 #include <vector>
-#include <memory>
-#include <GL/glew.h>
-#include "../Utils/Utils.h"
+#include <GL/gl3w.h>
+
+#include "../Utils/Basics.h"
 
 namespace Graphics {
 
@@ -26,6 +25,10 @@ namespace Graphics {
 		 * @return true if success
 		 */
 		bool fromFile(const std::string& filename);
+
+		const std::string& name() const { return mName; }
+
+		void setFilter(GLenum minFilter, GLenum magFilter);
 
 		/**
 		 * Set min filter
@@ -51,13 +54,13 @@ namespace Graphics {
 		 * @param minFilter MIN MIPMAP filter
 		 * @param magFilter MAG MIPMAP filter
 		 */
-		void generateMipMap(GLenum minFilter, GLenum magFilter);
+		void generateMipMap(GLenum minFilter = GL_NEAREST_MIPMAP_NEAREST, GLenum magFilter = GL_NEAREST_MIPMAP_NEAREST);
 
-		GLuint getId() const { return mId; }
-		int getWidth() const { return mWidth; }
-		int getHeight() const { return mHeight; }
-		GLenum getFormat() const { return mFormat; }
-		GLenum getType() const { return mType; }
+		GLuint id() const { return mId; }
+		int width() const { return mWidth; }
+		int height() const { return mHeight; }
+		GLenum format() const { return mFormat; }
+		GLenum type() const { return mType; }
 
 	private:
 		/**
@@ -73,6 +76,9 @@ namespace Graphics {
 
 		unsigned int mWidth = 0;
 		unsigned int mHeight = 0;
+
+		std::string mName;
+
 		GLuint mId = 0;
 		GLenum mMinFilter = GL_LINEAR;
 		GLenum mMagFilter = GL_LINEAR;

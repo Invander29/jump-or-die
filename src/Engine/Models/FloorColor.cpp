@@ -12,11 +12,10 @@ Models::FloorColor::FloorColor(GLuint program, float width, float length, float 
 
 void Models::FloorColor::draw(const glm::mat4 &view)
 {
-	glUseProgram(mProgram);
-
-	// Set color
+	Floor::draw(view);
 	glUniform3f(mUniColor, mR, mG, mB);
 
-	// Draw as usual
-	Floor::draw(view);
+	glBindVertexArray(mVAO);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	glBindVertexArray(0);
 }

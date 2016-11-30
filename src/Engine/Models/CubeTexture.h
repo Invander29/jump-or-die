@@ -27,8 +27,6 @@ namespace Models {
 	private:
 		GLuint mVboTexcoords = 0;
 		GLuint mTextureId = 0;
-
-		GLint mAttrTexcoord = -1;
 		GLint mUniTexture = -1;
 	};
 

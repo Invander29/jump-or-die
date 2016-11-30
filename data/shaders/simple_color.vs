@@ -1,8 +1,8 @@
-#version 120
+#version 330
 
 attribute vec3 coord3d;
 
-varying vec3 f_color;
+out vec3 f_color;
 
 uniform vec3 v_color;
 uniform mat4 mvp;

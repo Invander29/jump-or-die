@@ -16,7 +16,7 @@ namespace Utils {
 		 * Get elapsed time from last call of this function
 		 * @return delta time
 		 */
-		double getDelta();
+		double delta();
 
 	private:
 		std::chrono::time_point<std::chrono::high_resolution_clock> mTime;

@@ -1,13 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="External">
-      <UniqueIdentifier>{7a7cc576-7e0b-4172-89d2-929154979dba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine">
       <UniqueIdentifier>{4d7881e9-b381-42ae-99e1-b8f0a11abf13}</UniqueIdentifier>
     </Filter>
@@ -29,23 +22,33 @@
     <Filter Include="Engine\Utils">
       <UniqueIdentifier>{c596c29e-0d9a-4a0a-a427-8602b8287bf0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rdParty">
+      <UniqueIdentifier>{7a7cc576-7e0b-4172-89d2-929154979dba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdParty\lodepng">
+      <UniqueIdentifier>{34f108c4-d78f-45e4-bc51-a613e55b518a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdParty\gl3w">
+      <UniqueIdentifier>{f54b537a-93c0-4347-81e6-d28e56b0c0a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{625f6fc1-f118-490a-a903-0c9c85b2ad81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Objects">
+      <UniqueIdentifier>{d8b611dc-295e-4645-af2a-4af5152efcbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scenes">
+      <UniqueIdentifier>{c19b4ab3-4920-473e-9bec-408cd2d3dbec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ModelLoader">
+      <UniqueIdentifier>{80b9d7f5-3777-4a30-a2db-c2ef5cb30ee2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="external\lodepng.cpp">
-      <Filter>External</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameScene.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Engine\Core.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine\Utils\FileReader.cpp">
       <Filter>Engine\Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Utils\Timer.cpp">
-      <Filter>Engine\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\Utils\Utils.cpp">
       <Filter>Engine\Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Scenes\Scene.cpp">
@@ -96,18 +99,44 @@
     <ClCompile Include="src\Engine\Scenes\Camera.cpp">
       <Filter>Engine\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="3rdParty\src\lodepng\lodepng.cpp">
+      <Filter>3rdParty\lodepng</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\src\gl3w\gl3w.c">
+      <Filter>3rdParty\gl3w</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Application.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Utils\Message.cpp">
+      <Filter>Engine\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Main.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameScene.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Models\Triangle.cpp">
+      <Filter>Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\ModelLoader.cpp">
+      <Filter>Engine\ModelLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Car.cpp">
+      <Filter>Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TraficSign.cpp">
+      <Filter>Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tree.cpp">
+      <Filter>Game\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\GameScene.h" />
-    <ClInclude Include="external\lodepng.h">
-      <Filter>External</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\Core.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\Utils\Utils.h">
-      <Filter>Engine\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine\Utils\FileReader.h">
       <Filter>Engine\Utils</Filter>
     </ClInclude>
@@ -161,6 +190,36 @@
     </ClInclude>
     <ClInclude Include="src\Engine\Scenes\Camera.h">
       <Filter>Engine\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Application.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Utils\Message.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Utils\Basics.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameScene.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Models\Triangle.h">
+      <Filter>Engine\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\ModelLoader.h">
+      <Filter>Engine\ModelLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Car.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TraficSign.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tree.h">
+      <Filter>Game\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

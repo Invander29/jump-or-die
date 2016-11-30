@@ -4,10 +4,7 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
 #include <unordered_map>
-#include <GL/glew.h>
 #include "../Graphics/Texture.h"
 
 namespace Managers {
@@ -25,7 +22,7 @@ namespace Managers {
 		 * @param filename path to texture
 		 * @return spTexture
 		 */
-		Graphics::spTexture getTexture(const std::string& filename);
+		Graphics::spTexture texture(const std::string& filename);
 
 		/**
 		 * Delete texture
@@ -40,6 +37,7 @@ namespace Managers {
 		void clearTextures();
 
 	private:
+		static const std::string folderImages;
 		std::unordered_map<std::string, Graphics::spTexture> mTextures;
 	};
 

@@ -1,12 +1,14 @@
 #include "GameObject.h"
-#include <iterator>
+
+#include "../Utils/Message.h"
 
 using namespace Models;
+using namespace Utils;
 
 bool GameObject::bindAttrib(GLuint program, GLint& attrib, const char* name)
 {
 	if ((attrib = glGetAttribLocation(program, name)) == -1) {
-		Utils::error("Cannot bind attribute with name %s", name);
+		Message::error(__FILE__, __LINE__, "Cannot bind attribute with name %s", name);
 		return false;
 	}
 	return true;
@@ -15,7 +17,7 @@ bool GameObject::bindAttrib(GLuint program, GLint& attrib, const char* name)
 bool GameObject::bindUniform(GLuint program, GLint& attrib, const char* name)
 {
 	if ((attrib = glGetUniformLocation(program, name)) == -1) {
-		Utils::error("Cannot bind uniform with name %s", name);
+		Message::error(__FILE__, __LINE__, "Cannot bind uniform with name %s", name);
 		return false;
 	}
 	return true;

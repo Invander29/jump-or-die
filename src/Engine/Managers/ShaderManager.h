@@ -4,8 +4,7 @@
 
 #pragma once
 
-#include <GL/glew.h>
-#include <string>
+#include <GL/gl3w.h>
 #include <unordered_map>
 
 namespace Managers {
@@ -14,7 +13,7 @@ namespace Managers {
 	 * Manging shaders and linking programs
 	 */
 	class ShaderManager {
-	private:
+	public:
 		/**
 		 * Helper for shader
 		 */
@@ -30,9 +29,11 @@ namespace Managers {
 		 */
 		struct Program {
 			Program() {};
-			Program(GLuint _id, const std::string& _vs, const std::string& _fs) : id(_id), vertexShader(_vs), fragmentShader(_fs) {}
+			Program(GLuint _id, const std::string& _name, const std::string& _vs, const std::string& _fs) 
+			: id(_id), name(_name), vertexShader(_vs), fragmentShader(_fs) {}
 			GLuint id = 0;
 			int counter = 1;
+			std::string name;
 			std::string vertexShader;
 			std::string fragmentShader;
 		};
@@ -52,14 +53,21 @@ namespace Managers {
 		 * @param fs Name of the file of fragment shader
 		 * @return zero if error or ID of program
 		 */
-		GLuint createProgram(const std::string& name, const std::string& vs, const std::string& fs);
+		Program& get(const std::string& name, const std::string& vs, const std::string& fs);
 
 		/**
 		 * Delete program from memory and OpenGL
 		 * @param name Name of the program
 		 * @return true if deleted
 		 */
-		bool deleteProgram(const std::string& name);
+		bool remove(const std::string& name);
+
+		/**
+		* Delete program from memory and OpenGL
+		* @param program structure with data
+		* @return true if deleted
+		*/
+		bool remove(const Program& program);
 
 	private:
 		/**

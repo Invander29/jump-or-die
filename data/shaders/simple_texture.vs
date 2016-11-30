@@ -1,17 +1,13 @@
-#version 120
+#version 330
 
-attribute vec3 coord3d;
-//attribute vec3 v_color;
-attribute vec2 texcoord;
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec2 texCoord;
 
-//varying vec3 f_color;
-varying vec2 f_texcoord;
+out vec2 TexCoord;
 
-uniform mat4 m_transform;
 uniform mat4 mvp;
 
 void main(void) {
-	gl_Position = mvp * vec4(coord3d, 1.0);
-	//f_color = v_color;
-	f_texcoord = texcoord;
+	gl_Position = mvp * vec4(position, 1.0);
+	TexCoord = texCoord;
 }

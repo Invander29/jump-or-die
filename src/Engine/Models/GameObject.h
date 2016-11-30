@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Utils/Utils.h"
-#include <vector>
+#include <GL/gl3w.h>
+#include "../Utils/Basics.h"
 #include <glm/glm.hpp>
 
 namespace Models {

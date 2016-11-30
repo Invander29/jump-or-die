@@ -22,14 +22,13 @@ namespace Models {
 		 * @param texture texture ID for OpenGL
 		 */
 		FloorTexture(GLuint program, float width, float length, float height, GLuint texture);
-
-		virtual void draw(const glm::mat4 &view) override;
+		virtual ~FloorTexture();
+		
+		void draw(const glm::mat4 &view) override;
 
 	private:
 		GLuint mVboTexcoords = 0;
 		GLuint mTextureId = 0;
-
-		GLint mAttrTexcoord = -1;
 		GLint mUniTexture = -1;
 	};
 

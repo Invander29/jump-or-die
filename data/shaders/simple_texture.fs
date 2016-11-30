@@ -1,12 +1,12 @@
-#version 120
+#version 330
 
-varying vec2 f_texcoord;
+in vec2 TexCoord;
+out vec4 color;
 
-uniform float fade;
-uniform sampler2D mUniTexture;
+uniform sampler2D texture;
 
 void main(void) {
 	// flip y of texture
-	vec2 flipped_texcoord = vec2(f_texcoord.x, 1.0 - f_texcoord.y);
-	gl_FragColor = texture2D(mUniTexture, flipped_texcoord);
+	vec2 flipped_texcoord = vec2(TexCoord.x, 1.0 - TexCoord.y);
+	color = texture2D(texture, flipped_texcoord);
 }

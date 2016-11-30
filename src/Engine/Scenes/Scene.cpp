@@ -1,11 +1,12 @@
 #include "Scene.h"
+
 #include "../Models/Model.h"
-#include "../Core.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "../Application.h"
+#include "../Utils/Message.h"
 
 using namespace Scenes;
 using namespace Models;
+using namespace Utils;
 
 Scene::Scene()
 	: mCamera(45.0f, 0.1f, 100.0f)
@@ -43,28 +44,28 @@ void Scene::update()
 void Scene::draw()
 {
 	for (spGameObject object : mObjects) {
-		object->draw(mCamera.getMatrix());
+		object->draw(mCamera.matrix());
 	}
 }
 
 void Scene::show()
 {
-	Utils::debug("Scene show");
+	Message::debug("Scene show");
 }
 
 void Scene::resume()
 {
-	Utils::debug("Scene resume");
+	Message::debug("Scene resume");
 	mPause = false;
 }
 
 void Scene::pause()
 {
-	Utils::debug("Scene pause");
+	Message::debug("Scene pause");
 	mPause = true;
 }
 
 void Scene::hide()
 {
-	Utils::debug("Scene hide");
+	Message::debug("Scene hide");
 }

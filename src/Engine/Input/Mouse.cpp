@@ -3,76 +3,68 @@
 //
 
 #include "Mouse.h"
+#include <cstring>
 
 using namespace Input;
 
-Mouse::Mouse() {
-	init();
+Mouse::Mouse() 
+{
+	memset(mDown, 0, sizeof(mDown));
+	memset(mChange, 0, sizeof(mChange));
 }
 
-Mouse::~Mouse() {
-
+Mouse::~Mouse() 
+{
 }
 
-bool Mouse::init() {
-	mPrevX = 0;
-	mPrevY = 0;
-	mCurrentState = 0;
-
-	mCurrentState = SDL_GetMouseState(&mCurrentX, &mCurrentY);
-
-	mWheelX = 0;
-	mWheelY = 0;
-	return true;
-}
-
-void Mouse::update() {
-	mPrevX = mCurrentX;
-	mPrevY = mCurrentY;
-	mPrevState = mCurrentState;
-
-	mCurrentState = SDL_GetMouseState(&mCurrentX, &mCurrentY);
-
-	mWheelX = 0;
-	mWheelY = 0;
-}
-
-void Mouse::receiveEvent(const SDL_Event &event) {
-	switch (event.type) {
-		case SDL_MOUSEWHEEL:
-			mWheelX = event.wheel.x;
-			mWheelY = event.wheel.y;
-			break;
-
-		default:
-			break;
+void Mouse::onButtonDown(int button)
+{
+	if (button < 0 || button >= BUTTON_COUNT) {
+		return;
 	}
+	mDown[button] = true;
 }
 
-const glm::vec2 Mouse::getPosition() const {
-	return glm::vec2(mCurrentX, mCurrentY);
+void Mouse::onButtonUp(int button)
+{
+	if (button < 0 || button >= BUTTON_COUNT) {
+		return;
+	}
+	mDown[button] = false;
 }
 
-const glm::vec2 Mouse::getMove() const {
-	return glm::vec2(mCurrentX - mPrevX, mCurrentY - mPrevY);
+void Mouse::onMove(double x, double y)
+{
+	mLastPosition = mPosition;
+	mPosition.x = x;
+	mPosition.y = y;
 }
 
-bool Mouse::isButtonTrigered(const Uint32 button) const {
-	return ((SDL_BUTTON(button) & mCurrentState) != 0) && ((SDL_BUTTON(button) & mPrevState) == 0);
+void Mouse::onNextFrame()
+{
+	memset(mChange, 0, sizeof(mChange));
 }
 
-bool Mouse::isButtonPressed(const Uint32 button) const {
-	return (SDL_BUTTON(button) & mCurrentState) != 0;
+bool Mouse::isButtonTrigered(int button) const 
+{
+	if (button < 0 || button >= BUTTON_COUNT) {
+		return false;
+	}
+	return mChange[button];
 }
 
-bool Mouse::isButtonReleased(const Uint32 button) const {
-	return ((SDL_BUTTON(button) & mCurrentState) == 0) && ((SDL_BUTTON(button) & mPrevState) != 0);
+bool Mouse::isButtonPressed(int button) const 
+{
+	if (button < 0 || button >= BUTTON_COUNT) {
+		return false;
+	}
+	return mDown[button];
 }
 
-int Mouse::getWheelX() const {
-	return mWheelX;
-}
-
-int Mouse::getWheelY() const {
-	return mWheelY;
+bool Mouse::isButtonReleased(int button) const 
+{
+	if (button < 0 || button >= BUTTON_COUNT) {
+		return false;
+	}
+	return !mDown[button];
 }

@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include <SDL2/SDL.h>
+#include <GL/gl3w.h>
+#include <GLFW/glfw3.h>
 
 namespace Input {
 
@@ -16,40 +17,34 @@ namespace Input {
 		explicit Keyboard();
 		~Keyboard();
 
-		/**
-		 * Restore init values
-		 * @return true if success
-		 */
-		bool init();
-
-		/**
-		 * Update state of keyboard
-		 */
-		void update();
+		void onKeyDown(int key, int scancode);
+		void onKeyUp(int key, int scancode);
+		void onNextFrame();
 
 		/**
 		 * Check if key was clicked
 		 * @param keyCode Scancode of key
 		 * @return true if key was clicked
 		 */
-		bool isKeyTriggered(const SDL_Scancode keyCode) const;
+		bool isKeyTriggered(int key) const;
 
 		/**
 		 * Check if key is pressed
 		 * @param keyCode Scancode of key
 		 * @return true if key is pressed
 		 */
-		bool isKeyPressed(const SDL_Scancode keyCode) const;
+		bool isKeyPressed(int key) const;
 
 		/**
 		 * Check if key was released
 		 * @param keyCode Scancode of key
 		 * @return true if key was released
 		 */
-		bool isKeyReleased(const SDL_Scancode keyCode) const;
+		bool isKeyReleased(int key) const;
 
 	private:
-		Uint8 mPrevInput[SDL_NUM_SCANCODES];
-		Uint8 mCurrentInput[SDL_NUM_SCANCODES];
+		static const int KEY_COUNT = 512;
+		bool mDown[KEY_COUNT];
+		bool mChange[KEY_COUNT];
 	};
 }

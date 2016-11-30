@@ -3,38 +3,36 @@
 #include <vector>
 #include "Engine/Scenes/Scene.h"
 #include "Engine/Models/Floor.h"
-#include "Engine/Models/Player.h"
-#include "Engine/Core.h"
-
-#define FLOORS_COUNT 20 
+#include "Player.h"
+#include "Engine/Application.h"
 
 namespace Scenes {
 
 	class GameScene : public Scene {
-	private:
-		std::vector<Models::spFloor> floors;
-		Models::spPlayer player;
-		int player_pos;
-		int drawed_roads;
-		GLuint progSimpleColor;
-		GLuint progSimpleTexture;
-		Graphics::spTexture texFloor;
-		virtual void drawOneFloor();
-
 	public:
 		explicit GameScene();
-
 		virtual ~GameScene();
 
-		virtual void show() override;
+		void show() override;
+		void resume() override;
+		void pause() override;
+		void hide() override;
+		void update() override;
 
-		virtual void resume() override;
+	private:
+		void drawOneFloor();
 
-		virtual void pause() override;
+		std::vector<Models::spFloor> mFloors;
+		spPlayer mPlayer;
 
-		virtual void hide() override;
+		static const int FLOORS_COUNT = 20;
+		int mDrawedRoads;
 
-		virtual void update() override;
+		Managers::ShaderManager::Program mProgramColor;
+		Managers::ShaderManager::Program mProgramTexture;
+
+		Graphics::spTexture mTextureFloor; 
+		Graphics::spTexture mTextureCube;
 	};
 
 	MAKE_SMART(GameScene);

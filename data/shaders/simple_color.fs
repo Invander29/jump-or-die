@@ -1,6 +1,6 @@
-#version 120
+#version 330
 
-varying vec3 f_color;
+in vec3 f_color;
 
 uniform float fade;
 uniform sampler2D mUniTexture;

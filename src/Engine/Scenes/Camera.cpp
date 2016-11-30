@@ -2,17 +2,19 @@
 // Created by invander on 25.10.16.
 //
 
+#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "Camera.h"
-#include "../Core.h"
 
-Scenes::Camera::Camera(float fov, float near, float far)
+#include "Camera.h"
+#include "../Application.h"
+
+Scenes::Camera::Camera(float fov, float nearPlane, float farPlane)
 {
 	mPerspective = glm::perspective(
 			glm::radians(fov), // Field of view (30 - 90)
-			1.0f * Core::Width() / Core::Height(), // Window ratio
-			near,    // near
-			far); // far*/
+			1.0f * Application::instance().width() / Application::instance().height(), // Window ratio
+			nearPlane,    // near
+			farPlane); // far*/
 
 	mMatrix = mPerspective * mView;
 }

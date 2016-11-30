@@ -1,24 +1,13 @@
 #include "Cube.h"
-#include "../Core.h"
-#include "../Managers/ResourceManager.h"
-
-#include <glm/glm.hpp>
+#include "../Application.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
-#include <lodepng.h>
 
 using namespace Models;
 
 Cube::Cube(GLuint program, float size)
 		: Model(program)
 {
-	// Bind attributes
-	bindAttrib(mProgram, mAttrCoord3d, "coord3d");
-
-	// Bind uniforms
-	bindUniform(mProgram, mUniMvp, "mvp");
-
 	// Prepare buffer of vertices
 	const GLfloat vertices[] = {
 		// front
@@ -53,10 +42,6 @@ Cube::Cube(GLuint program, float size)
 		1.0f * size,	1.0f * size,	1.0f * size
 	};
 
-	glGenBuffers(1, &mVboVertices);
-	glBindBuffer(GL_ARRAY_BUFFER, mVboVertices);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
 	const GLushort elements[] = {
 		// front
 		0,  1,  2,
@@ -78,42 +63,39 @@ Cube::Cube(GLuint program, float size)
 		22, 23, 20
 	};
 
-	glGenBuffers(1, &mIboElements);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIboElements);
+	// 1. Bind Vertex Array Object
+	glBindVertexArray(mVAO);
+
+	// 2. Copy our vertices array in a buffer for OpenGL to use
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	// 3. Copy our index array in a element buffer for OpenGL to use
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+
+	// 3. Then set the vertex attributes pointers
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+
+	//4. Unbind the VBO, VAO
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 }
 
 Cube::~Cube()
 {
-	//glDeleteProgram(mProgram);
-	glDeleteBuffers(1, &mVboVertices);
-	glDeleteBuffers(1, &mIboElements);
 }
 
 void Cube::draw(const glm::mat4& view)
 {
-	glUseProgram(mProgram);
-
-	// Move object to location
-	glm::mat4 mvp = glm::translate(view, mPosition);
-	glUniformMatrix4fv(mUniMvp, 1, GL_FALSE, glm::value_ptr(mvp));
-
-	// Draw it
-	glBindBuffer(GL_ARRAY_BUFFER, mVboVertices);
-	glEnableVertexAttribArray((GLuint)mAttrCoord3d);
-	glVertexAttribPointer(
-			(GLuint)mAttrCoord3d, // attribute
-			3, // number of elements per vertex
-			GL_FLOAT, // type of element
-			GL_FALSE, // take value as-is
-			0, // next data appears every 5 floats
-			0); // offset of first element
+	Model::draw(view);
 }
 
 void Cube::update()
 {
-	Input::Keyboard& keyboard = Core::Core::GetKeyboard();
-	if (keyboard.isKeyPressed(SDL_SCANCODE_LEFT)) {
+	Input::Keyboard& keyboard = Application::instance().keyboard();
+	/*if (keyboard.isKeyPressed(SDL_SCANCODE_LEFT)) {
 		moveX(-3 * Core::Core::GetSpeed());
 	} else if (keyboard.isKeyPressed(SDL_SCANCODE_RIGHT)) {
 		moveX( 3 * Core::Core::GetSpeed());
@@ -129,5 +111,5 @@ void Cube::update()
 		moveZ(-3 * Core::Core::GetSpeed());
 	} else if (keyboard.isKeyPressed(SDL_SCANCODE_S)) {
 		moveZ( 3 * Core::Core::GetSpeed());
-	}
+	}*/
 }

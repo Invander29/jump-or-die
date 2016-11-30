@@ -2,39 +2,55 @@
 // Created by invander on 24.10.16.
 //
 
-#include <lodepng.h>
+#include <lodepng/lodepng.h>
 #include "Texture.h"
-#include "../Utils/Utils.h"
+#include "../Utils/Message.h"
+
+using namespace Utils;
 
 Graphics::Texture::Texture() {
 
 }
 
 Graphics::Texture::~Texture() {
-	Utils::debug("Deleting texture %d", mId);
+	Message::debug("Deleting texture %d", mId);
 	unregisterSelf();
 }
 
 bool Graphics::Texture::fromFile(const std::string &filename)
 {
-	Utils::debug("Loading texture %s", filename.c_str());
+	Message::debug("Loading texture %s", filename.c_str());
 
 	std::vector<unsigned char> data;
 	unsigned int error = lodepng::decode(data, mWidth, mHeight, filename);
 	if (error != 0) {
-		Utils::error("Cannot load texture: %s", lodepng_error_text(error));
+		Message::error(__FILE__, __LINE__, "Cannot load texture: %s", lodepng_error_text(error));
 		return false;
 	}
 
+	mName = filename;
 	registerSelf(&data[0]);
-	Utils::debug("Texture is registered as: %s / %d", filename.c_str(), mId);
+
+	Message::debug("Texture is registered as: %s / %d", filename.c_str(), mId);
 	return true;
+}
+
+
+void Graphics::Texture::setFilter(GLenum minFilter, GLenum magFilter)
+{
+	if (mId != 0) {
+		mMinFilter = minFilter;
+		mMagFilter = magFilter;
+		glBindTexture(GL_TEXTURE_2D, mId);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+	}
 }
 
 void Graphics::Texture::setMinFilter(GLenum filter)
 {
-	mMinFilter = filter;
 	if (mId != 0) {
+		mMinFilter = filter;
 		glBindTexture(GL_TEXTURE_2D, mId);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mMinFilter);
 	}
@@ -42,8 +58,8 @@ void Graphics::Texture::setMinFilter(GLenum filter)
 
 void Graphics::Texture::setMagFilter(GLenum filter)
 {
-	mMagFilter = filter;
 	if (mId != 0) {
+		mMagFilter = filter;
 		glBindTexture(GL_TEXTURE_2D, mId);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mMagFilter);
 	}

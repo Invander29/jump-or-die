@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GL/glew.h>
+#include <GL/gl3w.h>
 #include <vector>
 #include "GameObject.h"
 #include "Model.h"
@@ -25,13 +25,6 @@ namespace Models {
 		virtual void draw(const glm::mat4& view) override;
 
 		virtual void update() override;
-
-	protected:
-		GLuint mVboVertices = 0;
-		GLuint mIboElements = 0;
-
-		GLint mAttrCoord3d = -1;
-		GLint mUniMvp = -1;
 	};
 
 	MAKE_SMART(Cube);

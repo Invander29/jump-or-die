@@ -26,7 +26,7 @@ Scenes::spScene SceneManager::set(Scenes::spScene scene)
 	return mCurrentScene;
 }
 
-Scenes::spScene SceneManager::get() const {
+Scenes::spScene SceneManager::active() const {
 	return mCurrentScene;
 }
 

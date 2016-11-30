@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <GL/glew.h>
+#include <GL/gl3w.h>
 #include "Model.h"
 
 namespace Models {
@@ -30,10 +30,6 @@ namespace Models {
 		virtual void update() override;
 
 	protected:
-		GLuint mVboVertices = 0;
-		GLint mAttrCoord3d = -1;
-		GLint mUniMvp = -1;
-
 		float mWidth, mHeight, mLength;
 	};
 

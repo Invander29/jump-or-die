@@ -4,10 +4,11 @@
 
 #include "ShaderManager.h"
 #include "../Utils/FileReader.h"
-#include "../Utils/Utils.h"
+#include "../Utils/Message.h"
 
 using namespace std;
 using namespace Managers;
+using namespace Utils;
 
 ShaderManager::ShaderManager(const std::string& path)
 		: mPath(path)
@@ -28,7 +29,7 @@ GLuint ShaderManager::createVertexShader(const std::string &filename)
 		return it->second.id;
 	}
 
-	Utils::debug("Compiling Vertex Shader: %s", filename.c_str());
+	Message::debug("Compiling Vertex Shader: %s", filename.c_str());
 	GLuint shaderId = createShader(mPath + filename, GL_VERTEX_SHADER);
 	if (shaderId == 0) {
 		return 0;
@@ -47,7 +48,7 @@ GLuint ShaderManager::createFragmentShader(const std::string &filename)
 		return it->second.id;
 	}
 
-	Utils::debug("Compiling Fragment Shader: %s", filename.c_str());
+	Message::debug("Compiling Fragment Shader: %s", filename.c_str());
 	GLuint shaderId = createShader(mPath + filename, GL_FRAGMENT_SHADER);
 	if (shaderId == 0) {
 		return 0;
@@ -58,26 +59,28 @@ GLuint ShaderManager::createFragmentShader(const std::string &filename)
 	return shader.id;
 }
 
-GLuint ShaderManager::createProgram(const std::string &name, const std::string &vs, const std::string &fs)
+ShaderManager::Program& ShaderManager::get(const std::string &name, const std::string &vs, const std::string &fs)
 {
+	static Program nullProgram;
+
 	// Check if program exists
 	unordered_map<string, Program>::iterator it = mPrograms.find(name);
 	if (it != mPrograms.end()) {
 		it->second.counter++;
-		return it->second.id;
+		return it->second;
 	}
 
 	GLuint vertex = createVertexShader(vs);
 	if (vertex == 0) {
-		return 0;
+		return nullProgram;
 	}
 
 	GLuint fragment = createFragmentShader(fs);
 	if (fragment == 0) {
-		return 0;
+		return nullProgram;
 	}
 
-	Utils::debug("Linking Program: %s", name.c_str());
+	Message::debug("Linking Program: %s", name.c_str());
 	GLuint programId = glCreateProgram();
 	glAttachShader(programId, vertex);
 	glAttachShader(programId, fragment);
@@ -86,20 +89,20 @@ GLuint ShaderManager::createProgram(const std::string &name, const std::string &
 	GLint linkOk = GL_FALSE;
 	glGetProgramiv(programId, GL_LINK_STATUS, &linkOk);
 	if (!linkOk) {
-		Utils::errorGL(programId, "Cannot link programId!");
-		return 0;
+		Message::errorGL(__FILE__, __LINE__, programId, "Cannot link programId!");
+		return nullProgram;
 	}
 
-	Program program(programId, vs, fs);
+	Program program(programId, name, vs, fs);
 	mPrograms[name] = program;
-	return program.id;
+	return mPrograms[name];
 }
 
 GLuint ShaderManager::createShader(const std::string &filename, GLenum type) {
 	Utils::FileReader fileReader;
 	std::string content = fileReader.readFile(filename);
 	if (content.empty()) {
-		Utils::error("Cannot open file %s", filename.c_str());
+		Message::error(__FILE__, __LINE__, "Cannot open file %s", filename.c_str());
 		return 0;
 	}
 
@@ -111,7 +114,7 @@ GLuint ShaderManager::createShader(const std::string &filename, GLenum type) {
 	glCompileShader(result);
 	glGetShaderiv(result, GL_COMPILE_STATUS, &compileOK);
 	if (!compileOK) {
-		Utils::errorGL(result, "Cannot compile shader %s", filename.c_str());
+		Message::errorGL(__FILE__, __LINE__, result, "Cannot compile shader %s", filename.c_str());
 		glDeleteShader(result);
 		return 0;
 	}
@@ -122,7 +125,7 @@ GLuint ShaderManager::createShader(const std::string &filename, GLenum type) {
 bool ShaderManager::deleteVertexShader(const std::string &filename) {
 	unordered_map<string, Shader>::const_iterator it = mVertexShaders.find(filename);
 	if (it == mVertexShaders.end()) {
-		Utils::error("Cannot delete vertex shader, shader \"%s\" not found!", filename.c_str());
+		Message::error(__FILE__, __LINE__, "Cannot delete vertex shader, shader \"%s\" not found!", filename.c_str());
 		return false;
 	}
 
@@ -134,7 +137,7 @@ bool ShaderManager::deleteVertexShader(const std::string &filename) {
 bool ShaderManager::deleteFragmentShader(const std::string &filename) {
 	unordered_map<string, Shader>::const_iterator it = mFragmentShaders.find(filename);
 	if (it == mFragmentShaders.end()) {
-		Utils::error("Cannot delete fragment shader, shader \"%s\" not found!", filename.c_str());
+		Message::error(__FILE__, __LINE__, "Cannot delete fragment shader, shader \"%s\" not found!", filename.c_str());
 		return false;
 	}
 
@@ -143,10 +146,10 @@ bool ShaderManager::deleteFragmentShader(const std::string &filename) {
 	return true;
 }
 
-bool ShaderManager::deleteProgram(const std::string &filename) {
+bool ShaderManager::remove(const std::string &filename) {
 	unordered_map<string, Program>::const_iterator it = mPrograms.find(filename);
 	if (it == mPrograms.end()) {
-		Utils::error("Cannot delete program, program \"%s\" not found!", filename.c_str());
+		Message::error(__FILE__, __LINE__, "Cannot delete program, program \"%s\" not found!", filename.c_str());
 		return false;
 	}
 
@@ -160,6 +163,15 @@ bool ShaderManager::deleteProgram(const std::string &filename) {
 	glDeleteProgram(it->second.id);
 	mPrograms.erase(it);
 	return true;
+}
+
+bool ShaderManager::remove(const Program& program)
+{
+	if (program.id == 0) {
+		return false;
+	}
+
+	return remove(program.name);
 }
 
 void ShaderManager::clearVertexShaders() {

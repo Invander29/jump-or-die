@@ -18,32 +18,32 @@ namespace Models {
 		 * Create new model
 		 * @param program program ID for OpenGL
 		 */
-		explicit Model(GLuint program);
+		explicit Model(GLuint program, bool createEBO = true, bool createVBO = true, bool createVAO = true);
 		virtual ~Model() = 0;
 
 		/**
 		 * Get position
 		 * @return position
 		 */
-		glm::vec3 getPosition() const { return mPosition; }
+		glm::vec3 position() const { return mPosition; }
 
 		/**
 		 * Get X
 		 * @return x
 		 */
-		float getX() const { return mPosition.x; }
+		float x() const { return mPosition.x; }
 
 		/**
 		 * Get y
 		 * @return y
 		 */
-		float getY() const { return mPosition.y; }
+		float y() const { return mPosition.y; }
 
 		/**
 		 * Get z
 		 * @return z
 		 */
-		float getZ() const { return mPosition.z; }
+		float z() const { return mPosition.z; }
 
 		/**
 		 * Set position
@@ -109,8 +109,15 @@ namespace Models {
 		 */
 		void moveZ(float z) { mPosition.z += z; }
 
+		void update() override;
+		void draw(const glm::mat4& view) override;
+
 	protected:
-		GLuint mProgram;
+		GLuint mProgram = 0;
+		GLuint mVAO = 0;
+		GLuint mVBO = 0;
+		GLuint mEBO = 0;
+		GLint mMvp = -1;
 		glm::vec3 mPosition;
 	};
 
