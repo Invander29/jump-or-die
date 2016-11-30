@@ -1,4 +1,7 @@
 build/*
+data/debug.txt
+data/error.txt
+data/*.exe
 
 # CMake files
 CMakeCache.txt

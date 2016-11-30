@@ -1,5 +1,0 @@
-Cannot bind uniform with name v_color
-Cannot bind uniform with name v_color
-Cannot bind uniform with name v_color
-Cannot bind uniform with name v_color
-Cannot bind uniform with name v_color
