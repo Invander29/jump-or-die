@@ -32,9 +32,9 @@ CTestTestfile.cmake
 *.smod
 
 # Compiled Static libraries
-*.lai
-*.la
-*.a
+#*.lai
+#*.la
+#*.a
 #*.lib
 
 # Executables
@@ -63,8 +63,8 @@ CTestTestfile.cmake
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
-x64/
-x86/
+#x64/
+#x86/
 bld/
 [Bb]in/
 [Oo]bj/
