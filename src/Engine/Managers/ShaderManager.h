@@ -6,6 +6,8 @@
 
 #include <GL/gl3w.h>
 #include <unordered_map>
+#include <memory>
+#include "../Lighting/LightTypes.h"
 
 namespace Managers {
 
@@ -18,24 +20,58 @@ namespace Managers {
 		 * Helper for shader
 		 */
 		struct Shader {
-			Shader() {}
-			Shader(GLuint _id) : id(_id) {}
+			explicit Shader() {}
+			explicit Shader(GLuint _id) : id(_id) {}
 			GLuint id = 0;
 			int counter = 1;
+		};
+
+		class ProgramPart
+		{
+		public:
+			explicit ProgramPart() {}
+			explicit ProgramPart(GLuint programId, GLuint vsId, GLuint fsId, const std::string& vs, const std::string& fs) 
+				: mId(programId), mVertexShaderId(vsId), mFragmentShaderId(fsId), mVertexShader(vs), mFragmentShader(fs) {}
+			~ProgramPart();
+
+			GLuint id() const { return mId; }
+			GLuint vertexShaderId() const { return mVertexShaderId; }
+			GLuint fragmentShaderId() const { return mFragmentShaderId; }
+			const std::string& vertexShader() const { return mVertexShader; }
+			const std::string& fragmentShader() const { return mFragmentShader; }
+
+		private:
+			GLuint mId = 0;
+			GLuint mVertexShaderId = 0;
+			GLuint mFragmentShaderId = 0;
+
+			std::string mVertexShader = std::string();
+			std::string mFragmentShader = std::string();
 		};
 
 		/**
 		 * Helper for program
 		 */
-		struct Program {
-			Program() {};
-			Program(GLuint _id, const std::string& _name, const std::string& _vs, const std::string& _fs) 
-			: id(_id), name(_name), vertexShader(_vs), fragmentShader(_fs) {}
-			GLuint id = 0;
-			int counter = 1;
-			std::string name;
-			std::string vertexShader;
-			std::string fragmentShader;
+		class Program {
+		public:
+			explicit Program() {}
+			explicit Program(const std::string& name) 
+			: mName(name) {}
+			
+			GLuint id() const;
+			GLuint id(Lighting::Type type) const;
+
+			const std::string& name() const { return mName; }
+			std::shared_ptr<ProgramPart> withoutLight() const { return mWithoutLight; }
+			std::shared_ptr<ProgramPart> phong() const { return mPhong; }
+
+			friend ShaderManager;
+
+		private:
+			int mCounter = 1;
+			std::string mName = std::string();
+			std::shared_ptr<ProgramPart> mWithoutLight;
+			std::shared_ptr<ProgramPart> mPhong;
 		};
 
 	public:
@@ -53,7 +89,7 @@ namespace Managers {
 		 * @param fs Name of the file of fragment shader
 		 * @return zero if error or ID of program
 		 */
-		Program& get(const std::string& name, const std::string& vs, const std::string& fs);
+		std::shared_ptr<Program> get(const std::string& name, const std::string& vs, const std::string& fs);
 
 		/**
 		 * Delete program from memory and OpenGL
@@ -92,6 +128,8 @@ namespace Managers {
 		 */
 		GLuint createShader(const std::string& filename, GLenum type);
 
+		std::shared_ptr<ProgramPart> createProgram(const std::string& name, const std::string& vs, const std::string& fs);
+
 		/**
 		 * Delete vertex shader from memory and OpenGL
 		 * @param filename path to file
@@ -124,7 +162,6 @@ namespace Managers {
 		std::string mPath;
 		std::unordered_map<std::string, Shader> mVertexShaders;
 		std::unordered_map<std::string, Shader> mFragmentShaders;
-		std::unordered_map<std::string, Program> mPrograms;
+		std::unordered_map<std::string, std::shared_ptr<Program>> mPrograms;
 	};
-
 }

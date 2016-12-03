@@ -3,7 +3,7 @@
 
 const float Car::AREA_X = 10;
 
-Car::Car(GLuint program, bool fromRight, float delayTime, float waitTime, float speed)
+Car::Car(std::shared_ptr<Managers::ShaderManager::Program> program, bool fromRight, float delayTime, float waitTime, float speed)
 	: CubeColor(program, 1.0f, 1.0f, 0.0f, 0.0f), mFromRight(fromRight), 
 		mTime(-delayTime), mWaitTime(waitTime), mSpeed(speed)
 {
@@ -41,11 +41,11 @@ void Car::update()
 	}
 }
 
-void Car::draw(const glm::mat4& view)
+void Car::draw(Scenes::Scene* scene)
 {
 	if (!mVisible) {
 		return;
 	}
 
-	CubeColor::draw(view);
+	CubeColor::draw(scene);
 }

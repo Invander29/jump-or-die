@@ -3,14 +3,23 @@
 //
 
 #include "Model.h"
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/gtc/matrix_transform.inl>
 
-Models::Model::Model(GLuint program, bool createEBO, bool createVBO, bool createVAO)
+#include <gl/gl3w.h>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include "../Application.h"
+#include "../Scenes/Scene.h"
+
+Models::Model::Model(std::shared_ptr<Managers::ShaderManager::Program> program, bool createEBO, bool createVBO, bool createVAO, bool createNBO)
 	: mProgram{program}
 {
 	// Bind uniforms
-	bindUniform(mProgram, mMvp, "mvp");
+	bindUniform(mProgram, mUniView, "view");
+	bindUniform(mProgram, mUniModel, "model");
+
+	bindUniform(Lighting::Type::PHONG, mProgram, mUniLightPos, "lightPos");
+	bindUniform(Lighting::Type::PHONG, mProgram, mUniLightColor, "lightColor");
+	bindUniform(Lighting::Type::PHONG, mProgram, mUniViewPosition, "viewPos");
 
 	// Create buffers
 	if (createVAO) {
@@ -23,6 +32,10 @@ Models::Model::Model(GLuint program, bool createEBO, bool createVBO, bool create
 
 	if (createEBO) {
 		glGenBuffers(1, &mEBO);
+	}
+
+	if (createNBO) {
+		glGenBuffers(1, &mNBO);
 	}
 }
 
@@ -39,6 +52,10 @@ Models::Model::~Model()
 	if (mVAO != 0) {
 		glDeleteBuffers(1, &mVAO);
 	}
+
+	if (mNBO != 0) {
+		glDeleteBuffers(1, &mNBO);
+	}
 }
 
 
@@ -46,11 +63,16 @@ void Models::Model::update()
 {
 }
 
-void Models::Model::draw(const glm::mat4& view)
+void Models::Model::draw(Scenes::Scene* scene)
 {
-	glUseProgram(mProgram);
+	glUseProgram(mProgram->id());
 
-	// Move object to location
-	glm::mat4 mvp = glm::translate(view, mPosition);
-	glUniformMatrix4fv(mMvp, 1, GL_FALSE, glm::value_ptr(mvp));
+	// Set light and camera options
+	glUniform3fv(mUniLightPos(), 1, glm::value_ptr(scene->light().position()));
+	glUniform3fv(mUniLightColor(), 1, glm::value_ptr(scene->light().color()));
+	glUniform3fv(mUniViewPosition(), 1, glm::value_ptr(scene->camera().position()));
+
+	glm::mat4 model = glm::translate(glm::mat4(1), mPosition);
+	glUniformMatrix4fv(mUniModel(), 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(mUniView(), 1, GL_FALSE, glm::value_ptr(scene->camera().matrix()));
 }

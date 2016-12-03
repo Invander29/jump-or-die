@@ -21,18 +21,14 @@ namespace Scenes {
 		 */
 		explicit Camera(float fov, float near, float far);
 
-		/**
-		 * Look from place to place
-		 * @param position Position of camera
-		 * @param lookAt Position of the center of view
-		 */
-		void lookAt(glm::vec3 position, glm::vec3 lookAt);
+		void setPosition(float x, float y, float z) { setPosition(glm::vec3(x, y, z)); }
+		void setPosition(const glm::vec3& position) { mPosition = position; }
 
 		/**
 		 * Move camera to specific position
 		 * @param vector Vector of move
 		 */
-		void move(glm::vec3 vector);
+		void move(const glm::vec3& vector);
 
 		/**
 		 * Move camera to right
@@ -83,10 +79,22 @@ namespace Scenes {
 		 */
 		glm::mat4 matrix() const { return mMatrix; }
 
+		const glm::vec3& position() const { return mPosition; }
+
 	private:
+		void updateVectors();
+
 		glm::mat4 mPerspective;
 		glm::mat4 mMatrix;
-		glm::mat4 mView = glm::mat4(1.0f);
+
+		glm::vec3 mPosition;
+		glm::vec3 mFront;
+		glm::vec3 mUp;
+		glm::vec3 mRight;
+		glm::vec3 mWorldUp;
+
+		float mYaw;
+		float mPitch;
 	};
 
 }

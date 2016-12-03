@@ -5,7 +5,7 @@
 class TraficSign : public Models::CubeColor
 {
 public:
-	explicit TraficSign(GLuint program);
+	explicit TraficSign(std::shared_ptr<Managers::ShaderManager::Program> program);
 };
 
 MAKE_SMART(TraficSign);

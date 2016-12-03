@@ -1,10 +1,7 @@
 #version 330
 
-in vec3 f_color;
-
-uniform float fade;
-uniform sampler2D mUniTexture;
+uniform vec3 color;
 
 void main(void) {
-	gl_FragColor = vec4(f_color.x, f_color.y, f_color.z, 1.0);
+	gl_FragColor = vec4(color, 1.0);
 }

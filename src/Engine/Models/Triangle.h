@@ -6,10 +6,10 @@ namespace Models {
 	class Triangle : public Models::Model
 	{
 	public:
-		explicit Triangle(GLuint program);
+		explicit Triangle(std::shared_ptr<Managers::ShaderManager::Program> program);
 
 		void update() override;
-		void draw(const glm::mat4& view) override;
+		void draw(Scenes::Scene* scene) override;
 	};
 
 	MAKE_SMART(Triangle);

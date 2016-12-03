@@ -5,10 +5,10 @@
 class Car : public Models::CubeColor
 {
 public:
-	explicit Car(GLuint program, bool fromRight, float delayTime, float waitTime, float mSpeed);
+	explicit Car(std::shared_ptr<Managers::ShaderManager::Program> program, bool fromRight, float delayTime, float waitTime, float mSpeed);
 
 	void update() override;
-	void draw(const glm::mat4& view) override;
+	void draw(Scenes::Scene* scene) override;
 
 protected:
 	static const float AREA_X;

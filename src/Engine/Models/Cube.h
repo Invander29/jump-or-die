@@ -18,11 +18,11 @@ namespace Models {
 		 * @param program program ID for OpenGL
 		 * @param size size of cube
 		 */
-		Cube(GLuint program, float size);
+		Cube(std::shared_ptr<Managers::ShaderManager::Program> program, float size);
 
 		virtual ~Cube() = 0;
 
-		virtual void draw(const glm::mat4& view) override;
+		virtual void draw(Scenes::Scene* scene) override;
 
 		virtual void update() override;
 	};

@@ -21,13 +21,13 @@ namespace Models {
 		 * @param g Green
 		 * @param b Blue
 		 */
-		CubeColor(GLuint program, float size, float r, float g, float b);
+		CubeColor(std::shared_ptr<Managers::ShaderManager::Program> program, float size, float r, float g, float b);
 		~CubeColor();
 
-		virtual void draw(const glm::mat4& view) override;
+		virtual void draw(Scenes::Scene* scene) override;
 
 	private:
-		GLint mUniColor = -1;
+		Uniform mUniColor;
 		float mR, mG, mB;
 	};
 

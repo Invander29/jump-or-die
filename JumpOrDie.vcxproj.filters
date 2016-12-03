@@ -43,6 +43,9 @@
     <Filter Include="Engine\ModelLoader">
       <UniqueIdentifier>{80b9d7f5-3777-4a30-a2db-c2ef5cb30ee2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Lighting">
+      <UniqueIdentifier>{931bc67c-7346-4a28-a898-10577eb420c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Utils\FileReader.cpp">
@@ -135,6 +138,9 @@
     <ClCompile Include="src\Tree.cpp">
       <Filter>Game\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Lighting\Light.cpp">
+      <Filter>Engine\Lighting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Utils\FileReader.h">
@@ -220,6 +226,12 @@
     </ClInclude>
     <ClInclude Include="src\Tree.h">
       <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Lighting\LightTypes.h">
+      <Filter>Engine\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Lighting\Light.h">
+      <Filter>Engine\Lighting</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

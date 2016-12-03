@@ -21,11 +21,11 @@ namespace Models {
 		 * @param length length of floor
 		 * @param height level of floor
 		 */
-		Floor(GLuint program, float width, float length, float height);
+		Floor(std::shared_ptr<Managers::ShaderManager::Program> program, float width, float length, float height);
 
 		virtual ~Floor() = 0;
 
-		virtual void draw(const glm::mat4 &view) override;
+		virtual void draw(Scenes::Scene* scene) override;
 
 		virtual void update() override;
 

@@ -23,12 +23,12 @@ namespace Models {
 		 * @param g Green
 		 * @param b Blue
 		 */
-		FloorColor(GLuint program, float width, float length, float height, float r, float g, float b);
+		FloorColor(std::shared_ptr<Managers::ShaderManager::Program> program, float width, float length, float height, float r, float g, float b);
 
-		virtual void draw(const glm::mat4 &view) override;
+		virtual void draw(Scenes::Scene* scene) override;
 
 	private:
-		GLint mUniColor = -1;
+		Uniform mUniColor;
 		float mR, mG, mB;
 	};
 

@@ -170,6 +170,7 @@
     <ClCompile Include="src\Engine\Graphics\Texture.cpp" />
     <ClCompile Include="src\Engine\Input\Keyboard.cpp" />
     <ClCompile Include="src\Engine\Input\Mouse.cpp" />
+    <ClCompile Include="src\Engine\Lighting\Light.cpp" />
     <ClCompile Include="src\Engine\Managers\ResourceManager.cpp" />
     <ClCompile Include="src\Engine\Managers\SceneManager.cpp" />
     <ClCompile Include="src\Engine\Managers\ShaderManager.cpp" />
@@ -200,6 +201,8 @@
     <ClInclude Include="src\Engine\Graphics\Texture.h" />
     <ClInclude Include="src\Engine\Input\Keyboard.h" />
     <ClInclude Include="src\Engine\Input\Mouse.h" />
+    <ClInclude Include="src\Engine\Lighting\Light.h" />
+    <ClInclude Include="src\Engine\Lighting\LightTypes.h" />
     <ClInclude Include="src\Engine\Managers\ResourceManager.h" />
     <ClInclude Include="src\Engine\Managers\SceneManager.h" />
     <ClInclude Include="src\Engine\Managers\ShaderManager.h" />

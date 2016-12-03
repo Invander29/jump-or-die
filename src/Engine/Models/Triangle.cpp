@@ -2,8 +2,8 @@
 
 using namespace Models;
 
-Triangle::Triangle(GLuint program)
-	: Model(program)
+Triangle::Triangle(std::shared_ptr<Managers::ShaderManager::Program> program)
+	: Model(program, false)
 {
 	GLfloat vertices[] = {
 		-0.5f, -0.5f, 0.0f,
@@ -27,9 +27,9 @@ void Triangle::update()
 {
 }
 
-void Triangle::draw(const glm::mat4& view)
+void Triangle::draw(Scenes::Scene* scene)
 {
-	Model::draw(view);
+	Model::draw(scene);
 
 	glBindVertexArray(mVAO);
 	glDrawArrays(GL_TRIANGLES, 0, 3);

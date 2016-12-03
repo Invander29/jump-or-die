@@ -1,13 +1,11 @@
 #version 330
 
-attribute vec3 coord3d;
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec3 normal;
 
-out vec3 f_color;
-
-uniform vec3 v_color;
-uniform mat4 mvp;
+uniform mat4 view;
+uniform mat4 model;
 
 void main(void) {
-	gl_Position = mvp * vec4(coord3d, 1.0);
-	f_color = v_color;
+	gl_Position = view * model * vec4(position, 1.0f);
 }

@@ -5,7 +5,7 @@
 
 using namespace Models;
 
-Cube::Cube(GLuint program, float size)
+Cube::Cube(std::shared_ptr<Managers::ShaderManager::Program> program, float size)
 		: Model(program)
 {
 	// Prepare buffer of vertices
@@ -40,6 +40,40 @@ Cube::Cube(GLuint program, float size)
 		1.0f * size,	-1.0f * size,	-1.0f * size,
 		1.0f * size,	1.0f * size,	-1.0f * size,
 		1.0f * size,	1.0f * size,	1.0f * size
+	};
+
+	// Prepare buffer of normals
+	const GLfloat normals[] = {
+		// front
+		0, 0, 1,
+		0, 0, 1,
+		0, 0, 1,
+		0, 0, 1,
+		// top
+		0, 1, 0,
+		0, 1, 0,
+		0, 1, 0,
+		0, 1, 0,
+		// back
+		0, 0, -1,
+		0, 0, -1,
+		0, 0, -1,
+		0, 0, -1,
+		// bottom
+		0, -1, 0,
+		0, -1, 0,
+		0, -1, 0,
+		0, -1, 0,
+		// left
+		-1, 0, 0,
+		-1, 0, 0,
+		-1, 0, 0,
+		-1, 0, 0,
+		// right
+		1, 0, 0,
+		1, 0, 0,
+		1, 0, 0,
+		1, 0, 0,
 	};
 
 	const GLushort elements[] = {
@@ -78,6 +112,14 @@ Cube::Cube(GLuint program, float size)
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
 	glEnableVertexAttribArray(0);
 
+	// 2. Copy our vertices array in a buffer for OpenGL to use
+	glBindBuffer(GL_ARRAY_BUFFER, mNBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(normals), normals, GL_STATIC_DRAW);
+	
+	// 3. Then set the vertex attributes pointers
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+	glEnableVertexAttribArray(1);
+
 	//4. Unbind the VBO, VAO
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
@@ -87,9 +129,9 @@ Cube::~Cube()
 {
 }
 
-void Cube::draw(const glm::mat4& view)
+void Cube::draw(Scenes::Scene* scene)
 {
-	Model::draw(view);
+	Model::draw(scene);
 }
 
 void Cube::update()

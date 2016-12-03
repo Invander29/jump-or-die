@@ -5,7 +5,7 @@
 #include <cstring>
 #include "CubeTexture.h"
 
-Models::CubeTexture::CubeTexture(GLuint program, float size, GLuint texture) :
+Models::CubeTexture::CubeTexture(std::shared_ptr<Managers::ShaderManager::Program> program, float size, GLuint texture) :
 		Cube(program, size), mTextureId(texture)
 {
 	bindUniform(mProgram, mUniTexture, "texture");
@@ -30,8 +30,8 @@ Models::CubeTexture::CubeTexture(GLuint program, float size, GLuint texture) :
 	glBufferData(GL_ARRAY_BUFFER, sizeof(texcoords), texcoords, GL_STATIC_DRAW);
 
 	// TexCoord attribute
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glEnableVertexAttribArray(2);
 
 	// Unbind
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -44,13 +44,13 @@ Models::CubeTexture::~CubeTexture()
 	glDeleteBuffers(1, &mVboTexcoords);
 }
 
-void Models::CubeTexture::draw(const glm::mat4& view) 
+void Models::CubeTexture::draw(Scenes::Scene* scene) 
 {
-	Cube::draw(view);
+	Cube::draw(scene);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, mTextureId);
-	glUniform1i(mUniTexture, 0);
+	glUniform1i(mUniTexture(), 0);
 
 	glBindVertexArray(mVAO);
 

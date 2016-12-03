@@ -5,7 +5,7 @@
 class Tree : public Models::CubeColor
 {
 public:
-	explicit Tree(GLuint program);
+	explicit Tree(std::shared_ptr<Managers::ShaderManager::Program> program);
 };
 
 MAKE_SMART(Tree);

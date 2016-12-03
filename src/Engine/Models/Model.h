@@ -6,6 +6,7 @@
 
 
 #include "GameObject.h"
+#include "../Managers/ShaderManager.h"
 
 namespace Models {
 
@@ -18,7 +19,7 @@ namespace Models {
 		 * Create new model
 		 * @param program program ID for OpenGL
 		 */
-		explicit Model(GLuint program, bool createEBO = true, bool createVBO = true, bool createVAO = true);
+		explicit Model(std::shared_ptr<Managers::ShaderManager::Program> program, bool createEBO = true, bool createVBO = true, bool createVAO = true, bool createNBO = true);
 		virtual ~Model() = 0;
 
 		/**
@@ -110,14 +111,22 @@ namespace Models {
 		void moveZ(float z) { mPosition.z += z; }
 
 		void update() override;
-		void draw(const glm::mat4& view) override;
+		void draw(Scenes::Scene* scene) override;
 
 	protected:
-		GLuint mProgram = 0;
+		std::shared_ptr<Managers::ShaderManager::Program> mProgram;
+
 		GLuint mVAO = 0;
 		GLuint mVBO = 0;
+		GLuint mNBO = 0;
 		GLuint mEBO = 0;
-		GLint mMvp = -1;
+
+		Uniform mUniView;
+		Uniform mUniModel;
+		Uniform mUniLightPos;
+		Uniform mUniLightColor;
+		Uniform mUniViewPosition;
+
 		glm::vec3 mPosition;
 	};
 

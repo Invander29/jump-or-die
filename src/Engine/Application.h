@@ -11,6 +11,7 @@
 
 #include "Input/Keyboard.h"
 #include "Input/Mouse.h"
+#include "Lighting/LightTypes.h"
 
 /**
  * Basic class for this engine. It creates window and manages all managers. Use as singleton.
@@ -81,6 +82,9 @@ public:
 	 */
 	Input::Mouse& mouse() { return mMouse; }
 
+	void setLightingMode(Lighting::Type lightMode) { mLightingMode = lightMode; }
+	Lighting::Type lightingMode() const { return mLightingMode; }
+
 private:
 	// Inits
 	bool initWindow();
@@ -101,7 +105,6 @@ private:
 	void release();
 
 
-
 	double mSpeed = 1.0 / 100.0;
 
 	int mWidth = -1;
@@ -114,6 +117,8 @@ private:
 
 	std::string mWindowTitle;
 	GLFWwindow* mWindow = nullptr;
+
+	Lighting::Type mLightingMode = Lighting::Type::NONE;
 
 	Managers::SceneManager mSceneManager;
 	Managers::ShaderManager mShaderManager;

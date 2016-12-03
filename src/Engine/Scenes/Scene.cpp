@@ -44,7 +44,7 @@ void Scene::update()
 void Scene::draw()
 {
 	for (spGameObject object : mObjects) {
-		object->draw(mCamera.matrix());
+		object->draw(this);
 	}
 }
 

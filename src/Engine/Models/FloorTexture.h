@@ -21,15 +21,15 @@ namespace Models {
 		 * @param height level of floor
 		 * @param texture texture ID for OpenGL
 		 */
-		FloorTexture(GLuint program, float width, float length, float height, GLuint texture);
+		FloorTexture(std::shared_ptr<Managers::ShaderManager::Program> program, float width, float length, float height, GLuint texture);
 		virtual ~FloorTexture();
 		
-		void draw(const glm::mat4 &view) override;
+		void draw(Scenes::Scene* scene) override;
 
 	private:
 		GLuint mVboTexcoords = 0;
 		GLuint mTextureId = 0;
-		GLint mUniTexture = -1;
+		Uniform mUniTexture;
 	};
 
 	MAKE_SMART(FloorTexture);

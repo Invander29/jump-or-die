@@ -6,6 +6,7 @@
 #include "../Utils/Basics.h"
 #include "../Models/GameObject.h"
 #include "Camera.h"
+#include "../Lighting/Light.h"
 
 namespace Scenes {
 
@@ -43,6 +44,9 @@ namespace Scenes {
 		 */
 		Camera& camera() { return mCamera; }
 
+		Lighting::Light& light() { return mLight; }
+		const Lighting::Light& light() const { return mLight; }
+
 		/**
 		 * Called when scene needs to prepare objects
 		 */
@@ -77,6 +81,7 @@ namespace Scenes {
 		bool mPause = true;
 		std::vector<Models::spGameObject> mObjects;
 		Camera mCamera;
+		Lighting::Light mLight;
 	};
 
 	// Make as smart pointer

@@ -3,6 +3,7 @@
 //
 
 #include "SceneManager.h"
+#include "../Application.h"
 
 using namespace Managers;
 
@@ -32,6 +33,18 @@ Scenes::spScene SceneManager::active() const {
 
 void SceneManager::update()
 {
+	/**
+	 * Common settings
+	 */
+	Application& app = Application::instance();
+	if (app.keyboard().isKeyTriggered(GLFW_KEY_1)) {
+		app.setLightingMode(Lighting::Type::NONE);
+	} 
+	else if (app.keyboard().isKeyTriggered(GLFW_KEY_2)) {
+		app.setLightingMode(Lighting::Type::PHONG);
+	}
+
+
 	if (mCurrentScene) {
 		mCurrentScene->update();
 	}

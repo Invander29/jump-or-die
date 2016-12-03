@@ -28,8 +28,8 @@ namespace Scenes {
 		static const int FLOORS_COUNT = 20;
 		int mDrawedRoads;
 
-		Managers::ShaderManager::Program mProgramColor;
-		Managers::ShaderManager::Program mProgramTexture;
+		std::shared_ptr<Managers::ShaderManager::Program> mProgramColor;
+		std::shared_ptr<Managers::ShaderManager::Program> mProgramTexture;
 
 		Graphics::spTexture mTextureFloor; 
 		Graphics::spTexture mTextureCube;

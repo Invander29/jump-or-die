@@ -2,7 +2,7 @@
 #include "Engine/Input/Keyboard.h"
 #include "Engine/Application.h"
 
-Player::Player(GLuint program)
+Player::Player(std::shared_ptr<Managers::ShaderManager::Program> program)
 	: CubeColor(program, 1.0f, 1.0f, 1.0f, 1.0f)
 {
 }
@@ -11,9 +11,9 @@ Player::~Player()
 {
 }
 
-void Player::draw(const glm::mat4& view)
+void Player::draw(Scenes::Scene* scene)
 {
-	CubeColor::draw(view);
+	CubeColor::draw(scene);
 }
 
 void Player::update()

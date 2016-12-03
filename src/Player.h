@@ -12,10 +12,10 @@ public:
 	* Create new Player
 	* @param program program ID for OpenGL
 	*/
-	explicit Player(GLuint program);
+	explicit Player(std::shared_ptr<Managers::ShaderManager::Program> program);
 	virtual ~Player();
 
-	void draw(const glm::mat4& view) override;
+	void draw(Scenes::Scene* scene) override;
 	void update() override;
 
 	int jumpPosition() const { return mJumpPosition; }
