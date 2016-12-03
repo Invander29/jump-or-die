@@ -2,7 +2,7 @@
 // Created by invander on 24.10.16.
 //
 
-#include <lodepng/lodepng.h>
+#include <lodepng.h>
 #include "Texture.h"
 #include "../Utils/Message.h"
 

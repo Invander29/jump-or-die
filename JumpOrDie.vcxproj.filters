@@ -46,6 +46,9 @@
     <Filter Include="Engine\Lighting">
       <UniqueIdentifier>{931bc67c-7346-4a28-a898-10577eb420c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rdParty\tiny_obj_loader">
+      <UniqueIdentifier>{3d12bc68-1abd-404c-a758-a94c1bd3c323}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Utils\FileReader.cpp">
@@ -140,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="src\Engine\Lighting\Light.cpp">
       <Filter>Engine\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\src\tiny_obj_loader\tiny_obj_loader.cc">
+      <Filter>3rdParty\tiny_obj_loader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

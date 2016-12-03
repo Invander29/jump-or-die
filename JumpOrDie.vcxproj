@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="3rdParty\src\gl3w\gl3w.c" />
     <ClCompile Include="3rdParty\src\lodepng\lodepng.cpp" />
+    <ClCompile Include="3rdParty\src\tiny_obj_loader\tiny_obj_loader.cc" />
     <ClCompile Include="src\Car.cpp" />
     <ClCompile Include="src\Engine\Application.cpp" />
     <ClCompile Include="src\Engine\Graphics\Texture.cpp" />

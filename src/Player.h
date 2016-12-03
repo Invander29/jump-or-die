@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Engine/Models/CubeColor.h"
+#include "Engine/Graphics/Texture.h"
 
 /**
 * Abstract Player
 */
-class Player : public Models::CubeColor
+class Player : public Models::Model
 {
 public:
 	/**
@@ -22,6 +23,8 @@ public:
 
 private:
 	int mJumpPosition = 0;
+	GLuint mTBO = 0;
+	Graphics::spTexture mTexture;
 };
 
 MAKE_SMART(Player);
