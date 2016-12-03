@@ -1,10 +1,10 @@
 ﻿#include "Car.h"
 #include "Engine/Application.h"
 
-const float Car::AREA_X = 10;
+const float Car::AREA_X = 25;
 
-Car::Car(std::shared_ptr<Managers::ShaderManager::Program> program, bool fromRight, float delayTime, float waitTime, float speed)
-	: CubeColor(program, 1.0f, 1.0f, 0.0f, 0.0f), mFromRight(fromRight), 
+Car::Car(GLuint program, bool fromRight, float delayTime, float waitTime, float speed)
+	: CubeColor(program, 0.8f, 1.0f, 0.0f, 0.0f), mFromRight(fromRight), 
 		mTime(-delayTime), mWaitTime(waitTime), mSpeed(speed)
 {
 	// Create on one side or other
@@ -19,7 +19,6 @@ void Car::update()
 		if (mTime > mWaitTime) {
 			mTime = 0;
 			mVisible = true;
-			mPosition.x = ((mFromRight) ? 1 : -1) * AREA_X;
 		}
 	} 
 	// Move to next side
@@ -28,24 +27,24 @@ void Car::update()
 		if (mFromRight) {
 			mPosition.x -= mSpeed * Application::instance().speed();
 			if (mPosition.x < -AREA_X) {
-				mVisible = false;
+				mPosition.x = ((mFromRight) ? 1 : -1) * AREA_X;
 			}
 		} 
 		// Left to right
 		else {
 			mPosition.x += mSpeed * Application::instance().speed();
 			if (mPosition.x > AREA_X) {
-				mVisible = false;
+				mPosition.x = ((mFromRight) ? 1 : -1) * AREA_X;
 			}
 		}
 	}
 }
 
-void Car::draw(Scenes::Scene* scene)
+void Car::draw(const glm::mat4& view)
 {
 	if (!mVisible) {
 		return;
 	}
 
-	CubeColor::draw(scene);
+	CubeColor::draw(view);
 }

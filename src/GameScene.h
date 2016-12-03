@@ -1,10 +1,12 @@
 #pragma once
 
 #include <vector>
+#include <glm/glm.hpp>
 #include "Engine/Scenes/Scene.h"
 #include "Engine/Models/Floor.h"
 #include "Player.h"
 #include "Engine/Application.h"
+#include "Car.h"
 
 namespace Scenes {
 
@@ -23,10 +25,15 @@ namespace Scenes {
 		void drawOneFloor();
 
 		std::vector<Models::spFloor> mFloors;
+		std::vector<spCar> mCars;
 		spPlayer mPlayer;
 
-		static const int FLOORS_COUNT = 20;
+		static const int FLOORS_COUNT = 24;
+		const float SPEED_CONS = 1.5;
 		int mDrawedRoads;
+		float cameraPos;
+		bool stopped;
+		bool gameover;
 
 		std::shared_ptr<Managers::ShaderManager::Program> mProgramColor;
 		std::shared_ptr<Managers::ShaderManager::Program> mProgramTexture;

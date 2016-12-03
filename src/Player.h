@@ -23,6 +23,8 @@ public:
 
 private:
 	int mJumpPosition = 0;
+	int jumpAnimation;
+	static const int ANIM_STEPS = 20;
 	GLuint mTBO = 0;
 	Graphics::spTexture mTexture;
 };
