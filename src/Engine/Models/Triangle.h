@@ -1,9 +1,9 @@
 ﻿#pragma once
-#include "Model.h"
+#include "ModelObject.h"
 
 namespace Models {
 
-	class Triangle : public Models::Model
+	class Triangle : public Models::ModelObject
 	{
 	public:
 		explicit Triangle(std::shared_ptr<Managers::ShaderManager::Program> program);

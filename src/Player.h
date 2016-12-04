@@ -1,12 +1,11 @@
 #pragma once
 
-#include "Engine/Models/CubeColor.h"
-#include "Engine/Graphics/Texture.h"
+#include "Engine/Models/ModelObj.h"
 
 /**
 * Abstract Player
 */
-class Player : public Models::Model
+class Player : public Models::ModelObj
 {
 public:
 	/**
@@ -23,10 +22,8 @@ public:
 
 private:
 	int mJumpPosition = 0;
-	int jumpAnimation;
+	int jumpAnimation = 0;
 	static const int ANIM_STEPS = 20;
-	GLuint mTBO = 0;
-	Graphics::spTexture mTexture;
 };
 
 MAKE_SMART(Player);

@@ -30,7 +30,7 @@ void Camera::move(const glm::vec3& vector)
 
 void Camera::moveRight(float x)
 {
-	move(glm::vec3(x, 0.0f, 0.0f));
+	move(glm::vec3(-x, 0.0f, 0.0f));
 }
 
 void Camera::moveUp(float y)
@@ -40,7 +40,7 @@ void Camera::moveUp(float y)
 
 void Camera::moveForward(float z)
 {
-	move(glm::vec3(0.0f, 0.0f, z));
+	move(glm::vec3(0.0f, 0.0f, -z));
 }
 
 void Camera::rotate(float angle, glm::vec3 vector)

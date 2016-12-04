@@ -6,6 +6,7 @@
 
 #include <unordered_map>
 #include "../Graphics/Texture.h"
+#include "../Graphics/Model.h"
 
 namespace Managers {
 
@@ -36,9 +37,14 @@ namespace Managers {
 		 */
 		void clearTextures();
 
+		Graphics::spModel model(const std::string& filename);
+		bool deleteModel(const std::string& filename);
+		void clearModels();
+
 	private:
 		static const std::string folderImages;
 		std::unordered_map<std::string, Graphics::spTexture> mTextures;
+		std::unordered_map<std::string, Graphics::spModel> mModels;
 	};
 
 }

@@ -5,14 +5,14 @@
 #pragma once
 
 #include <GL/gl3w.h>
-#include "Model.h"
+#include "ModelObject.h"
 
 namespace Models {
 
 	/**
 	 * Abstract floor oject
 	 */
-	class Floor : public Model {
+	class Floor : public ModelObject {
 	public:
 		/**
 		 * Create new floor

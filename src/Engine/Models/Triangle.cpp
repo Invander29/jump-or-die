@@ -3,7 +3,7 @@
 using namespace Models;
 
 Triangle::Triangle(std::shared_ptr<Managers::ShaderManager::Program> program)
-	: Model(program, false)
+	: ModelObject(program, false)
 {
 	GLfloat vertices[] = {
 		-0.5f, -0.5f, 0.0f,
@@ -29,7 +29,7 @@ void Triangle::update()
 
 void Triangle::draw(Scenes::Scene* scene)
 {
-	Model::draw(scene);
+	ModelObject::draw(scene);
 
 	glBindVertexArray(mVAO);
 	glDrawArrays(GL_TRIANGLES, 0, 3);

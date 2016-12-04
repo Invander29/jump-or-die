@@ -60,3 +60,41 @@ bool ResourceManager::deleteTexture(const std::string &filename)
 void ResourceManager::clearTextures() {
 	mTextures.clear();
 }
+
+spModel ResourceManager::model(const std::string &filename)
+{
+	std::string fullname = filename + ".obj";
+
+	// Load old from memory
+	unordered_map<string, spModel>::iterator it = mModels.find(fullname);
+	if (it != mModels.end()) {
+		return it->second;
+	}
+
+	// Load new from disk
+	spModel model = make_shared<Model>();
+	if (!model->load(fullname)) {
+		Message::error(__FILE__, __LINE__, "Cannot load model %s", fullname.c_str());
+		return model;
+	}
+
+	mModels[fullname] = model;
+	return model;
+}
+
+bool ResourceManager::deleteModel(const std::string &filename)
+{
+	std::string fullname = filename + ".obj";
+
+	unordered_map<string, spModel>::const_iterator it = mModels.find(fullname);
+	if (it == mModels.end()) {
+		return false;
+	}
+
+	mModels.erase(it);
+	return true;
+}
+
+void ResourceManager::clearModels() {
+	mModels.clear();
+}

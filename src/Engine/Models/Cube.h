@@ -3,14 +3,14 @@
 #include <GL/gl3w.h>
 #include <vector>
 #include "GameObject.h"
-#include "Model.h"
+#include "ModelObject.h"
 
 namespace Models {
 
 	/**
 	 * Abstract cube
 	 */
-	class Cube : public Model
+	class Cube : public ModelObject
 	{
 	public:
 		/**

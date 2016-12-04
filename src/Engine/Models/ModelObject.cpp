@@ -2,7 +2,7 @@
 // Created by invander on 22.10.16.
 //
 
-#include "Model.h"
+#include "ModelObject.h"
 
 #include <gl/gl3w.h>
 #include <glm/gtc/type_ptr.hpp>
@@ -10,7 +10,7 @@
 #include "../Application.h"
 #include "../Scenes/Scene.h"
 
-Models::Model::Model(std::shared_ptr<Managers::ShaderManager::Program> program, bool createEBO, bool createVBO, bool createVAO, bool createNBO)
+Models::ModelObject::ModelObject(std::shared_ptr<Managers::ShaderManager::Program> program, bool createEBO, bool createVBO, bool createVAO, bool createNBO)
 	: mProgram{program}
 {
 	// Bind uniforms
@@ -39,7 +39,7 @@ Models::Model::Model(std::shared_ptr<Managers::ShaderManager::Program> program, 
 	}
 }
 
-Models::Model::~Model() 
+Models::ModelObject::~ModelObject() 
 {
 	if (mVBO != 0) {
 		glDeleteBuffers(1, &mVBO);
@@ -59,11 +59,11 @@ Models::Model::~Model()
 }
 
 
-void Models::Model::update()
+void Models::ModelObject::update()
 {
 }
 
-void Models::Model::draw(Scenes::Scene* scene)
+void Models::ModelObject::draw(Scenes::Scene* scene)
 {
 	glUseProgram(mProgram->id());
 
@@ -72,7 +72,7 @@ void Models::Model::draw(Scenes::Scene* scene)
 	glUniform3fv(mUniLightColor(), 1, glm::value_ptr(scene->light().color()));
 	glUniform3fv(mUniViewPosition(), 1, glm::value_ptr(scene->camera().position()));
 
-	glm::mat4 model = glm::translate(glm::mat4(1), mPosition);
+	glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), mPosition), mScale);
 	glUniformMatrix4fv(mUniModel(), 1, GL_FALSE, glm::value_ptr(model));
 	glUniformMatrix4fv(mUniView(), 1, GL_FALSE, glm::value_ptr(scene->camera().matrix()));
 }

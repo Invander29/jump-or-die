@@ -9,7 +9,7 @@
 using namespace Models;
 
 Floor::Floor(std::shared_ptr<Managers::ShaderManager::Program> program, float width, float length, float height)
-		: Model(program, false), mWidth(width), mLength(length), mHeight(height)
+		: ModelObject(program, false), mWidth(width), mLength(length), mHeight(height)
 {
 	// Prepare buffer of vertices
 	const GLfloat vertices[] = {
@@ -57,7 +57,7 @@ Floor::~Floor()
 
 void Floor::draw(Scenes::Scene* scene)
 {
-	Model::draw(scene);
+	ModelObject::draw(scene);
 }
 
 void Floor::update() {

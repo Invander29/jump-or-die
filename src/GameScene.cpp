@@ -11,9 +11,10 @@
 #include "Engine/Models/FloorTexture.h"
 #include "Engine/Models/Triangle.h"
 #include "Car.h"
-#include "TraficSign.h"
 #include "Tree.h"
 #include "Engine/Utils/Message.h"
+#include "TextGameOver.h"
+#include "TextStart.h"
 
 
 using namespace Scenes;
@@ -57,8 +58,6 @@ void GameScene::show() {
 		glm::vec3(0.0f, 0.0f, -12.0f));// Camera looks at this position)*/
 	camera.setPosition(0, 25.0f, 10.0f);
 	camera.lookUp(-45.0f);
-	//camera.setPosition(0, 2, 2);
-	//camera.lookUp(-45);
 	setCamera(camera);
 	cameraPos = 0.0;
 	stopped = false;
@@ -74,51 +73,37 @@ void GameScene::show() {
 	mTextureCube = Application::instance().resourceManager().texture("cube.png");
 	mTextureFloor = Application::instance().resourceManager().texture("floor.png");
 
-	spFloorTexture floor = SMART(FloorTexture, mProgramTexture, 1.0f, 1.0f, 0.0f, mTextureFloor->id());
-	add(floor);
-
-	spCubeTexture cube = SMART(CubeTexture, mProgramTexture, 1.0f, mTextureCube->id());
-	cube->setPosition(0, 0, -4);
-	add(cube);
-
-	// Objects TODO! this is just example
-	// Create some cars
-	/*for (int i = 0; i < 10; ++i) {
-		spCar car = SMART(Car, mProgramColor.id, (i % 2) ? true : false, i / 4.0f, 3.0f, 3.0f);
-		car->setZ(-i * 2);
-		add(car);
-	}*/
-
-	// Create some trafic signs (only for effect)
-	// TODO this is just example
-	/*for (int i = 0; i < 10; ++i) {
-		spTraficSign sign = SMART(TraficSign, mProgramColor.id);
-		sign->setZ(-i * 2);
-		sign->setX(-10 + i * 2);
-		add(sign);
+	// Test trees
+	// TODO Just a tree test (modify / remove)
+	for (int i=0; i<20; ++i) {
+		for (int a = 0; a < 2; ++a) {
+			spTree tree = SMART(Tree, mProgramTexture);
+			tree->setPosition((a*2 - 1) *  15, 0, -i*2);
+			add(tree);
+		}
 	}
 
-	// Create some trees (only for effect)
-	// TODO this is just example
-	for (int i = 0; i < 10; ++i) {
-		spTree tree = SMART(Tree, mProgramColor);
-		tree->setZ(-i * 2);
-		tree->setX(10 - i * 2);
-		add(tree);
-	}*/
+	// Test of texts
+	spTextGameOver gameOver = SMART(TextGameOver, mProgramTexture);
+	gameOver->setPosition(0, 5, -15);
+	add(gameOver);
+
+	spTextStart startGame = SMART(TextStart, mProgramTexture);
+	startGame->setPosition(0, 5, -5);
+	add(startGame);
 
 	// Player
-	mPlayer = std::make_shared<Player>(mProgramColor.id);
+	mPlayer = std::make_shared<Player>(mProgramTexture);
 	mPlayer->setPosition(0, 0, -12);
 	add(mPlayer);
 
 	//Generate map
-	mFloors.push_back(std::make_shared<FloorTexture>(mProgramTexture.id, 25.0f, 1.0f, 0.0f, mTextureFloor->id()));
+	mFloors.push_back(std::make_shared<FloorTexture>(mProgramTexture, 25.0f, 1.0f, 0.0f, mTextureFloor->id()));
 	mFloors.back()->setPosition(0, -1.0, (mFloors.size() - 1)*(-2.0));
 	add(mFloors.back());
 	for (int i = 0; i < 3; i++)
 	{
-		mFloors.push_back(std::make_shared<FloorColor>(mProgramColor.id, 25.0f, 1.0f, 0.0f, 0.6f, 0.6f, 0.6f));
+		mFloors.push_back(std::make_shared<FloorColor>(mProgramColor, 25.0f, 1.0f, 0.0f, 0.6f, 0.6f, 0.6f));
 		mFloors.back()->setPosition(0, -1.0, (mFloors.size() - 1)*(-2.0));
 		add(mFloors.back());
 		bool carsDirection = rand() % 2;
@@ -129,12 +114,12 @@ void GameScene::show() {
 		std::random_shuffle(positions.begin(), positions.end());
 		for (int i = 0; i < count; i++) //generovani aut na danej ceste
 		{
-			mCars.push_back(std::make_shared<Car>(mProgramColor.id, carsDirection, 0.0f, 0.0f, carsSpeed)); //pridanie auta do zoznamu aut
+			mCars.push_back(std::make_shared<Car>(mProgramTexture, carsDirection, 0.0f, 0.0f, carsSpeed)); //pridanie auta do zoznamu aut
 			mCars.back()->setX((float)positions[i]);
 			mCars.back()->setZ((mFloors.size() - 1)*(-2.0));
 			add(mCars.back());
 		}
-		mFloors.push_back(std::make_shared<FloorTexture>(mProgramTexture.id, 25.0f, 1.0f, 0.0f, mTextureFloor->id()));
+		mFloors.push_back(std::make_shared<FloorTexture>(mProgramTexture, 25.0f, 1.0f, 0.0f, mTextureFloor->id()));
 		mFloors.back()->setPosition(0, -1.0, (mFloors.size() - 1)*(-2.0));
 		add(mFloors.back());
 	}
@@ -143,7 +128,7 @@ void GameScene::show() {
 	for (int i = 0; i < FLOORS_COUNT-3; i++)
 	{
 		drawOneFloor();
-	}*/
+	}
 }
 
 void GameScene::update() {
@@ -256,7 +241,7 @@ void GameScene::drawOneFloor()
 	using namespace Graphics;
 	if (mDrawedRoads < 3 && (mDrawedRoads == 0 || rand() % 2 == 0))
 	{
-		mFloors.push_back(std::make_shared<FloorColor>(mProgramColor.id, 25.0f, 1.0f, 0.0f, 0.05 * (mDrawedRoads % 2) + 0.6, 0.05 * (mDrawedRoads % 2) + 0.6, 0.05 * (mDrawedRoads % 2) + 0.6));
+		mFloors.push_back(std::make_shared<FloorColor>(mProgramColor, 25.0f, 1.0f, 0.0f, 0.05 * (mDrawedRoads % 2) + 0.6, 0.05 * (mDrawedRoads % 2) + 0.6, 0.05 * (mDrawedRoads % 2) + 0.6));
 		mFloors.back()->setPosition(0, -1.0, (mFloors.size() - 1)*(-2.0));
 		add(mFloors.back());
 		mDrawedRoads++;
@@ -268,7 +253,7 @@ void GameScene::drawOneFloor()
 		std::random_shuffle(positions.begin(), positions.end());
 		for (int i=0; i < count; i++) //generovani aut na danej ceste
 		{
-			mCars.push_back(std::make_shared<Car>(mProgramColor.id, carsDirection, 0.0f, 0.0f, carsSpeed)); //pridanie auta do zoznamu aut
+			mCars.push_back(std::make_shared<Car>(mProgramTexture, carsDirection, 0.0f, 0.0f, carsSpeed)); //pridanie auta do zoznamu aut
 			mCars.back()->setX((float)positions[i]);
 			mCars.back()->setZ((mFloors.size() - 1)*(-2.0));
 			add(mCars.back());
@@ -276,7 +261,7 @@ void GameScene::drawOneFloor()
 	}
 	else
 	{
-		mFloors.push_back(std::make_shared<FloorTexture>(mProgramTexture.id, 25.0f, 1.0f, 0.0f, mTextureFloor->id()));
+		mFloors.push_back(std::make_shared<FloorTexture>(mProgramTexture, 25.0f, 1.0f, 0.0f, mTextureFloor->id()));
 		mFloors.back()->setPosition(0, -1.0, (mFloors.size() - 1)*(-2.0));
 		add(mFloors.back());
 		mDrawedRoads = 0;

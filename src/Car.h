@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#include "Engine/Models/CubeColor.h"
+#include "Engine/Models/ModelObj.h"
 
-class Car : public Models::CubeColor
+class Car : public Models::ModelObj
 {
 public:
 	explicit Car(std::shared_ptr<Managers::ShaderManager::Program> program, bool fromRight, float delayTime, float waitTime, float mSpeed);

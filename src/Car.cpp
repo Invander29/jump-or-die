@@ -3,12 +3,15 @@
 
 const float Car::AREA_X = 25;
 
-Car::Car(GLuint program, bool fromRight, float delayTime, float waitTime, float speed)
-	: CubeColor(program, 0.8f, 1.0f, 0.0f, 0.0f), mFromRight(fromRight), 
+Car::Car(std::shared_ptr<Managers::ShaderManager::Program> program, bool fromRight, float delayTime, float waitTime, float speed)
+	: ModelObj(program, "aut", "aut"), mFromRight(fromRight), 
 		mTime(-delayTime), mWaitTime(waitTime), mSpeed(speed)
 {
 	// Create on one side or other
 	mVisible = false;
+
+	// TODO Rotate / Flip (don't drive backward)
+	mScale = glm::vec3(0.25f, 0.25f, 0.25f * ((mFromRight) ? 1 : -1));
 }
 
 void Car::update()
@@ -40,11 +43,11 @@ void Car::update()
 	}
 }
 
-void Car::draw(const glm::mat4& view)
+void Car::draw(Scenes::Scene* scene)
 {
 	if (!mVisible) {
 		return;
 	}
 
-	CubeColor::draw(view);
+	ModelObj::draw(scene);
 }

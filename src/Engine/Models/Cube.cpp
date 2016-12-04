@@ -6,7 +6,7 @@
 using namespace Models;
 
 Cube::Cube(std::shared_ptr<Managers::ShaderManager::Program> program, float size)
-		: Model(program)
+		: ModelObject(program)
 {
 	// Prepare buffer of vertices
 	const GLfloat vertices[] = {
@@ -131,7 +131,7 @@ Cube::~Cube()
 
 void Cube::draw(Scenes::Scene* scene)
 {
-	Model::draw(scene);
+	ModelObject::draw(scene);
 }
 
 void Cube::update()

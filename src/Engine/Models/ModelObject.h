@@ -13,14 +13,14 @@ namespace Models {
 	/**
 	 * Simple abstract model for game scene
 	 */
-	class Model : public GameObject {
+	class ModelObject : public GameObject {
 	public:
 		/**
 		 * Create new model
 		 * @param program program ID for OpenGL
 		 */
-		explicit Model(std::shared_ptr<Managers::ShaderManager::Program> program, bool createEBO = true, bool createVBO = true, bool createVAO = true, bool createNBO = true);
-		virtual ~Model() = 0;
+		explicit ModelObject(std::shared_ptr<Managers::ShaderManager::Program> program, bool createEBO = true, bool createVBO = true, bool createVAO = true, bool createNBO = true);
+		virtual ~ModelObject() = 0;
 
 		/**
 		 * Get position
@@ -127,7 +127,8 @@ namespace Models {
 		Uniform mUniLightColor;
 		Uniform mUniViewPosition;
 
-		glm::vec3 mPosition;
+		glm::vec3 mPosition = glm::vec3(0);
+		glm::vec3 mScale = glm::vec3(1);
 	};
 
 }

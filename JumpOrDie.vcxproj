@@ -168,6 +168,7 @@
     <ClCompile Include="3rdParty\src\tiny_obj_loader\tiny_obj_loader.cc" />
     <ClCompile Include="src\Car.cpp" />
     <ClCompile Include="src\Engine\Application.cpp" />
+    <ClCompile Include="src\Engine\Graphics\Model.cpp" />
     <ClCompile Include="src\Engine\Graphics\Texture.cpp" />
     <ClCompile Include="src\Engine\Input\Keyboard.cpp" />
     <ClCompile Include="src\Engine\Input\Mouse.cpp" />
@@ -175,7 +176,6 @@
     <ClCompile Include="src\Engine\Managers\ResourceManager.cpp" />
     <ClCompile Include="src\Engine\Managers\SceneManager.cpp" />
     <ClCompile Include="src\Engine\Managers\ShaderManager.cpp" />
-    <ClCompile Include="src\Engine\ModelLoader.cpp" />
     <ClCompile Include="src\Engine\Models\Cube.cpp" />
     <ClCompile Include="src\Engine\Models\CubeColor.cpp" />
     <ClCompile Include="src\Engine\Models\CubeTexture.cpp" />
@@ -183,22 +183,26 @@
     <ClCompile Include="src\Engine\Models\FloorColor.cpp" />
     <ClCompile Include="src\Engine\Models\FloorTexture.cpp" />
     <ClCompile Include="src\Engine\Models\GameObject.cpp" />
-    <ClCompile Include="src\Engine\Models\Model.cpp" />
+    <ClCompile Include="src\Engine\Models\ModelObject.cpp" />
+    <ClCompile Include="src\Engine\Models\ModelObj.cpp" />
     <ClCompile Include="src\Engine\Models\Triangle.cpp" />
     <ClCompile Include="src\Engine\Scenes\Camera.cpp" />
     <ClCompile Include="src\Engine\Scenes\Scene.cpp" />
     <ClCompile Include="src\Engine\Utils\FileReader.cpp" />
+    <ClCompile Include="src\Engine\Utils\ModelLoader.cpp" />
     <ClCompile Include="src\Engine\Utils\Timer.cpp" />
     <ClCompile Include="src\Engine\Utils\Message.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\TraficSign.cpp" />
+    <ClCompile Include="src\TextGameOver.cpp" />
+    <ClCompile Include="src\TextStart.cpp" />
     <ClCompile Include="src\Tree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Car.h" />
     <ClInclude Include="src\Engine\Application.h" />
+    <ClInclude Include="src\Engine\Graphics\Model.h" />
     <ClInclude Include="src\Engine\Graphics\Texture.h" />
     <ClInclude Include="src\Engine\Input\Keyboard.h" />
     <ClInclude Include="src\Engine\Input\Mouse.h" />
@@ -207,7 +211,6 @@
     <ClInclude Include="src\Engine\Managers\ResourceManager.h" />
     <ClInclude Include="src\Engine\Managers\SceneManager.h" />
     <ClInclude Include="src\Engine\Managers\ShaderManager.h" />
-    <ClInclude Include="src\Engine\ModelLoader.h" />
     <ClInclude Include="src\Engine\Models\Cube.h" />
     <ClInclude Include="src\Engine\Models\CubeColor.h" />
     <ClInclude Include="src\Engine\Models\CubeTexture.h" />
@@ -215,17 +218,20 @@
     <ClInclude Include="src\Engine\Models\FloorColor.h" />
     <ClInclude Include="src\Engine\Models\FloorTexture.h" />
     <ClInclude Include="src\Engine\Models\GameObject.h" />
-    <ClInclude Include="src\Engine\Models\Model.h" />
+    <ClInclude Include="src\Engine\Models\ModelObject.h" />
+    <ClInclude Include="src\Engine\Models\ModelObj.h" />
     <ClInclude Include="src\Engine\Models\Triangle.h" />
     <ClInclude Include="src\Engine\Scenes\Camera.h" />
     <ClInclude Include="src\Engine\Scenes\Scene.h" />
     <ClInclude Include="src\Engine\Utils\Basics.h" />
     <ClInclude Include="src\Engine\Utils\FileReader.h" />
+    <ClInclude Include="src\Engine\Utils\ModelLoader.h" />
     <ClInclude Include="src\Engine\Utils\Timer.h" />
     <ClInclude Include="src\Engine\Utils\Message.h" />
     <ClInclude Include="src\GameScene.h" />
     <ClInclude Include="src\Player.h" />
-    <ClInclude Include="src\TraficSign.h" />
+    <ClInclude Include="src\TextGameOver.h" />
+    <ClInclude Include="src\TextStart.h" />
     <ClInclude Include="src\Tree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

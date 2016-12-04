@@ -40,14 +40,14 @@
     <Filter Include="Game\Scenes">
       <UniqueIdentifier>{c19b4ab3-4920-473e-9bec-408cd2d3dbec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\ModelLoader">
-      <UniqueIdentifier>{80b9d7f5-3777-4a30-a2db-c2ef5cb30ee2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Lighting">
       <UniqueIdentifier>{931bc67c-7346-4a28-a898-10577eb420c9}</UniqueIdentifier>
     </Filter>
     <Filter Include="3rdParty\tiny_obj_loader">
       <UniqueIdentifier>{3d12bc68-1abd-404c-a758-a94c1bd3c323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Texts">
+      <UniqueIdentifier>{74f12183-4bbb-4b80-8441-baaa224bbd6e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -67,9 +67,6 @@
       <Filter>Engine\Models</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Models\GameObject.cpp">
-      <Filter>Engine\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\Models\Model.cpp">
       <Filter>Engine\Models</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Models\Cube.cpp">
@@ -129,13 +126,7 @@
     <ClCompile Include="src\Engine\Models\Triangle.cpp">
       <Filter>Engine\Models</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\ModelLoader.cpp">
-      <Filter>Engine\ModelLoader</Filter>
-    </ClCompile>
     <ClCompile Include="src\Car.cpp">
-      <Filter>Game\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TraficSign.cpp">
       <Filter>Game\Objects</Filter>
     </ClCompile>
     <ClCompile Include="src\Tree.cpp">
@@ -146,6 +137,24 @@
     </ClCompile>
     <ClCompile Include="3rdParty\src\tiny_obj_loader\tiny_obj_loader.cc">
       <Filter>3rdParty\tiny_obj_loader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Models\ModelObj.cpp">
+      <Filter>Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Models\ModelObject.cpp">
+      <Filter>Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Utils\ModelLoader.cpp">
+      <Filter>Engine\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Graphics\Model.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextGameOver.cpp">
+      <Filter>Game\Texts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextStart.cpp">
+      <Filter>Game\Texts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -165,9 +174,6 @@
       <Filter>Engine\Models</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Models\GameObject.h">
-      <Filter>Engine\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\Models\Model.h">
       <Filter>Engine\Models</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Models\Cube.h">
@@ -221,13 +227,7 @@
     <ClInclude Include="src\Engine\Models\Triangle.h">
       <Filter>Engine\Models</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\ModelLoader.h">
-      <Filter>Engine\ModelLoader</Filter>
-    </ClInclude>
     <ClInclude Include="src\Car.h">
-      <Filter>Game\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TraficSign.h">
       <Filter>Game\Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\Tree.h">
@@ -238,6 +238,24 @@
     </ClInclude>
     <ClInclude Include="src\Engine\Lighting\Light.h">
       <Filter>Engine\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Models\ModelObj.h">
+      <Filter>Engine\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Models\ModelObject.h">
+      <Filter>Engine\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Utils\ModelLoader.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\Model.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextGameOver.h">
+      <Filter>Game\Texts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextStart.h">
+      <Filter>Game\Texts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

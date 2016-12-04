@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-#include "../Models/Model.h"
+#include "../Models/ModelObject.h"
 #include "../Application.h"
 #include "../Utils/Message.h"
 
