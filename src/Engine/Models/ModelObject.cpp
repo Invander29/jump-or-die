@@ -73,6 +73,9 @@ void Models::ModelObject::draw(Scenes::Scene* scene)
 	glUniform3fv(mUniViewPosition(), 1, glm::value_ptr(scene->camera().position()));
 
 	glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), mPosition), mScale);
+	model = glm::rotate(model, mRotateAngles.x, glm::vec3(1.0f, 0.0f, 0.0f));
+	model = glm::rotate(model, mRotateAngles.y, glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::rotate(model, mRotateAngles.z, glm::vec3(0.0f, 0.0f, 1.0f));
 	glUniformMatrix4fv(mUniModel(), 1, GL_FALSE, glm::value_ptr(model));
 	glUniformMatrix4fv(mUniView(), 1, GL_FALSE, glm::value_ptr(scene->camera().matrix()));
 }

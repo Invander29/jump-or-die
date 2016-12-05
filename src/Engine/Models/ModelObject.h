@@ -129,6 +129,7 @@ namespace Models {
 
 		glm::vec3 mPosition = glm::vec3(0);
 		glm::vec3 mScale = glm::vec3(1);
+		glm::vec3 mRotateAngles = glm::vec3(0);
 	};
 
 }
