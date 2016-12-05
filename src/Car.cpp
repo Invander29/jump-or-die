@@ -1,7 +1,7 @@
 ﻿#include "Car.h"
 #include "Engine/Application.h"
 
-const float Car::AREA_X = 25;
+const float Car::AREA_X = 24;
 
 Car::Car(std::shared_ptr<Managers::ShaderManager::Program> program, bool fromRight, float delayTime, float waitTime, float speed)
 	: ModelObj(program, "aut", "aut"), mFromRight(fromRight), 
@@ -9,9 +9,15 @@ Car::Car(std::shared_ptr<Managers::ShaderManager::Program> program, bool fromRig
 {
 	// Create on one side or other
 	mVisible = false;
-
+	stopped = false;
 	// TODO Rotate / Flip (don't drive backward)
-	mScale = glm::vec3(0.25f, 0.25f, 0.25f * ((mFromRight) ? 1 : -1));
+	mScale = glm::vec3((mFromRight ? 0.4f : -0.4f), 0.4f, 0.4f);
+}
+
+void Car::gameover()
+{
+	stopped = true;
+
 }
 
 void Car::update()
@@ -25,7 +31,7 @@ void Car::update()
 		}
 	} 
 	// Move to next side
-	else {
+	else if (!stopped){
 		// Rigth to left
 		if (mFromRight) {
 			mPosition.x -= mSpeed * Application::instance().speed();

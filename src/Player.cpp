@@ -12,11 +12,20 @@
 Player::Player(std::shared_ptr<Managers::ShaderManager::Program> program)
 	: ModelObj(program, "mch", "mch")
 {
+	jumpAnimation = -1;
+	stopped = false;
 	mScale = glm::vec3(0.5f);
 }
 
 Player::~Player()
 {
+}
+
+
+void Player::gameover()
+{
+	stopped = true;
+
 }
 
 void Player::draw(Scenes::Scene* scene)
@@ -27,7 +36,7 @@ void Player::draw(Scenes::Scene* scene)
 void Player::update()
 {
 	Input::Keyboard& keyboard = Application::instance().keyboard();
-	if (keyboard.isKeyTriggered(GLFW_KEY_SPACE)) {
+	if (keyboard.isKeyTriggered(GLFW_KEY_SPACE) && !stopped) {
 		if (jumpAnimation > -1) //ak sa nestihne dokoncit animacia
 		{
 			moveZ(-2.0 / ANIM_STEPS * (ANIM_STEPS - jumpAnimation));
@@ -50,3 +59,4 @@ void Player::update()
 		setY(0.0);
 	}
 }
+

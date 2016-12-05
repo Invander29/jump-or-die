@@ -7,6 +7,8 @@
 #include "Player.h"
 #include "Engine/Application.h"
 #include "Car.h"
+#include "TextGameOver.h"
+#include "TextStart.h"
 
 namespace Scenes {
 
@@ -27,12 +29,17 @@ namespace Scenes {
 		std::vector<Models::spFloor> mFloors;
 		std::vector<spCar> mCars;
 		spPlayer mPlayer;
+		spTextGameOver gameOver;
+		spTextStart startGame;
 
 		static const int FLOORS_COUNT = 24;
-		const float SPEED_CONS = 1.5;
+		const float SPEED_CONS = 1.0;
+		const float RATIO = 2.0;
+		float diffStep;
 		int mDrawedRoads;
 		float cameraPos;
 		bool stopped;
+		bool started;
 		bool gameover;
 
 		std::shared_ptr<Managers::ShaderManager::Program> mProgramColor;

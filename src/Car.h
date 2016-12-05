@@ -9,12 +9,14 @@ public:
 
 	void update() override;
 	void draw(Scenes::Scene* scene) override;
+	void gameover();
 
 protected:
 	static const float AREA_X;
 
 	bool mFromRight;
 	bool mVisible;
+	bool stopped;
 
 	float mTime;
 	float mWaitTime;
