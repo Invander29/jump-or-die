@@ -48,10 +48,10 @@ GameScene::~GameScene()
 	}
 }
 
-void GameScene::show() 
+void GameScene::show()
 {
 	Scene::show();
-	
+
 	cameraPos = 0.0; //pocitadlo na poziciu kamery
 	stopped = false;
 	gameover = false;
@@ -70,16 +70,6 @@ void GameScene::show()
 	camera.lookRight(-7.0f);
 	setCamera(camera);
 
-	// Test trees
-	// TODO Just a tree test (modify / remove)
-	for (int i=0; i<20; ++i) {
-		for (int a = 0; a < 2; ++a) {
-			spTree tree = SMART(Tree, mProgramTexture);
-			tree->setPosition((a*2 - 1) *  15.0f, 0, -i*2.0f);
-			add(tree);
-		}
-	}
-
 	// Player
 	mPlayer = std::make_shared<Player>(mProgramTexture);
 	mPlayer->setPosition(0, 0, -12);
@@ -87,17 +77,28 @@ void GameScene::show()
 
 	// Texts
 	startGame = SMART(TextStart, mProgramColor);
-	startGame->setPosition(0, 5, cameraPos*(-RATIO) - 13.0f);
+	startGame->setPosition(0, 5, cameraPos*(-RATIO) - 12.0f);
 	add(startGame);
+	pressSpace = SMART(TextPressSpace, mProgramColor);
 
 	gameOver = SMART(TextGameOver, mProgramColor);
-	pressSpace = SMART(TextPressSpace, mProgramColor);
 
 	//Generate map
 	spFloorTexture floor = std::make_shared<FloorTexture>(mProgramTexture, 25.0f, 1.0f, 0.0f, mTextureFloor->id());
 	mFloors.push_back(floor);
 	floor->setPosition(0.0, 0.0, (mFloors.size() - 1)*(-RATIO));
 	add(floor);
+	int count = rand() % 9;
+	std::vector<int> treepositions;
+	for (int i = -24; i <= -4; i += 2) treepositions.push_back(i);
+	for (int i = 4; i <= 24; i += 2) treepositions.push_back(i);
+	std::random_shuffle(treepositions.begin(), treepositions.end());
+	for (int i = 0; i < count; i++) //generovani stromov na trave
+	{
+		spTree tree = SMART(Tree, mProgramTexture);
+		tree->setPosition(treepositions[i], 0, (mFloors.size() - 1)*(-RATIO));
+		add(tree);
+	}
 	for (int i = 0; i < 3; i++)
 	{
 		spFloorColor floor2 = std::make_shared<FloorColor>(mProgramColor, 25.0f, 1.0f, 0.0f, 0.6f, 0.6f, 0.6f);
@@ -123,8 +124,16 @@ void GameScene::show()
 		mFloors.push_back(floor3);
 		floor3->setPosition(0.0f, 0.0f, (mFloors.size() - 1)*(-RATIO));
 		add(floor3);
+		count = rand() % 9;
+		std::random_shuffle(treepositions.begin(), treepositions.end());
+		for (int i = 0; i < count; i++) //generovani stromov na trave
+		{
+			spTree tree = SMART(Tree, mProgramTexture);
+			tree->setPosition(treepositions[i], 0, (mFloors.size() - 1)*(-RATIO));
+			add(tree);
+		}
 	}
-	
+
 	srand(int(time(NULL)));
 	for (int i = 0; i < FLOORS_COUNT - 3; i++)
 	{
@@ -132,7 +141,7 @@ void GameScene::show()
 	}
 }
 
-void GameScene::update() 
+void GameScene::update()
 {
 	Scene::update();
 	float moveLen;
@@ -150,7 +159,7 @@ void GameScene::update()
 		startGame->setVisibility(false);
 		started = true;
 	}
-			
+
 	// Check if player has moved
 	static int lastPlayerPosition = 0;
 	if (lastPlayerPosition != mPlayer->jumpPosition()) {
@@ -167,7 +176,7 @@ void GameScene::update()
 			moveLen = (SPEED_CONS + diffStep / 3) * app.speed();
 		}
 
-		camera().moveForward(moveLen*RATIO); //posun kamery *2 kvoli tomu ze sirka pasu je 2 nie 1
+		camera().moveForward(moveLen*RATIO); //posun kamery, kvoli tomu ze sirka pasu je 2 nie 1
 		mLight.setPosition(mLight.position()[0], mLight.position()[1], mLight.position()[2] - (moveLen*RATIO));
 		cameraPos += moveLen;
 	}
@@ -183,14 +192,14 @@ void GameScene::update()
 				mPlayer->gameover();
 				gameOver->setPosition(0, 5, cameraPos*(-RATIO) - 13.0f);
 				add(gameOver);
+				pressSpace->setPosition(0, 5, cameraPos*(-RATIO) - 8.0f);
+				add(pressSpace);
 				gameover = true;
 				stopped = true;
 				for (auto const& carstop : mCars)
 				{
 					carstop->gameover();
 				}
-				gameOver->setPosition(0, 5, cameraPos*(-RATIO) - 13.0f);
-				add(gameOver);
 			}
 		}
 
@@ -200,6 +209,8 @@ void GameScene::update()
 			mPlayer->gameover();
 			gameOver->setPosition(0, 5, cameraPos*(-RATIO) - 13.0f);
 			add(gameOver);
+			pressSpace->setPosition(0, 5, cameraPos*(-RATIO) - 8.0f);
+			add(pressSpace);
 			gameover = true;
 			stopped = true;
 			for (auto const& carstop : mCars)
@@ -207,7 +218,7 @@ void GameScene::update()
 				carstop->gameover();
 			}
 		}
-	}	
+	}
 }
 
 void GameScene::drawOneFloor()
@@ -243,21 +254,32 @@ void GameScene::drawOneFloor()
 		floor->setPosition(0, 0, (mFloors.size() - 1)*(-RATIO));
 		add(floor);
 		mDrawedRoads = 0;
+		int count = rand() % 9;
+		std::vector<int> treepositions;
+		for (int i = -24; i <= -4; i += 2) treepositions.push_back(i);
+		for (int i = 4; i <= 24; i += 2) treepositions.push_back(i);
+		std::random_shuffle(treepositions.begin(), treepositions.end());
+		for (int i = 0; i < count; i++) //generovani stromov na trave
+		{
+			spTree tree = SMART(Tree, mProgramTexture);
+			tree->setPosition(treepositions[i], 0, (mFloors.size() - 1)*(-RATIO));
+			add(tree);
+		}
 	}
 	diffStep += 0.1f;
 }
 
-void GameScene::resume() 
+void GameScene::resume()
 {
 	Scene::resume();
 }
 
-void GameScene::pause() 
+void GameScene::pause()
 {
 	Scene::pause();
 }
 
-void GameScene::hide() 
+void GameScene::hide()
 {
 	Scene::hide();
 
