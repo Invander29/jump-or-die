@@ -21,12 +21,6 @@ using namespace Graphics;
 
 extern Image ImageFloor;
 
-/**
-* Konstruktor hernej sceny, sluzi na nacitanie shaderov, zakladne nastavenia a pod.
-*
-* \brief Konstruktor hernej sceny
-* \author Pavel Reznak
-*/
 GameScene::GameScene()
 {
 	// Shaders init
@@ -39,12 +33,6 @@ GameScene::GameScene()
 	Application::instance().enableMultisampling(true);
 }
 
-/**
-* Destruktor hernej sceny, sluzi na odstranenie shaderov a pod.
-*
-* \brief Destruktor hernej sceny
-* \author Pavel Reznak
-*/
 GameScene::~GameScene()
 {
 	if (mProgramTexture) {
@@ -60,13 +48,6 @@ GameScene::~GameScene()
 	}
 }
 
-/**
-* Tato metoda sluzi na vykreslenie sceny na zaciatku.
-*
-* \brief Prvotne vykreslenie sceny
-* \author Pavel Reznak
-* \author Martin Tomovic
-*/
 void GameScene::show()
 {
 	Scene::show();
@@ -166,13 +147,6 @@ void GameScene::show()
 	}
 }
 
-/**
-* Tato metoda sluzi na prekreslovanie sceny pri kazdej iteracii.
-*
-* \brief Prekreslovanie sceny
-* \author Pavel Reznak
-* \author Martin Tomovic
-*/
 void GameScene::update()
 {
 	Scene::update();
@@ -262,12 +236,6 @@ void GameScene::update()
 	}
 }
 
-/**
-* Tato metoda sluzi na pridanie dalsieho pasu cesty alebo travy a vytvorenie objektov na nich naviazanych.
-*
-* \brief Vykreslenie dalsieho pasu
-* \author Martin Tomovic
-*/
 void GameScene::drawOneFloor()
 {
 	using namespace Models;
@@ -326,34 +294,16 @@ void GameScene::drawOneFloor()
 	mDiff += DIFF_STEP;
 }
 
-/**
-* Tato metoda sluzi na obnovenie sceny po zastaveni.
-*
-* \brief Obnovenie pozastavenej hernej sceny
-* \author Pavel Reznak
-*/
 void GameScene::resume()
 {
 	Scene::resume();
 }
 
-/**
-* Tato metoda sluzi na pozastavenie sceny.
-*
-* \brief Pozastavenie hernej sceny
-* \author Pavel Reznak
-*/
 void GameScene::pause()
 {
 	Scene::pause();
 }
 
-/**
-* Tato metoda sluzi na zrusenie nastaveni sceny.
-*
-* \brief Zrusenie hernej sceny
-* \author Pavel Reznak
-*/
 void GameScene::hide()
 {
 	Scene::hide();

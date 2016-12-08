@@ -15,16 +15,47 @@ namespace Scenes {
 
 	class GameScene : public Scene {
 	public:
+
+		/**
+		* Konstruktor hernej sceny, sluzi na nacitanie shaderov, zakladne nastavenia a pod.
+		*/
 		explicit GameScene();
+
+		/**
+		* Destruktor hernej sceny, sluzi na odstranenie shaderov a pod.
+		*/
 		virtual ~GameScene();
 
+		/**
+		* Tato metoda sluzi na vykreslenie sceny na zaciatku.
+		*/
 		void show() override;
+		
+		/**
+		* Tato metoda sluzi na obnovenie sceny po zastaveni.
+		*/
 		void resume() override;
+		
+		/**
+		* Tato metoda sluzi na pozastavenie sceny.
+		*/
 		void pause() override;
+		
+		/**
+		* Tato metoda sluzi na zrusenie nastaveni sceny.
+		*/
 		void hide() override;
+		
+		/**
+		* Tato metoda sluzi na prekreslovanie sceny pri kazdej iteracii.
+		*/
 		void update() override;
 
 	private:
+		
+		/**
+		* Tato metoda sluzi na pridanie dalsieho pasu cesty alebo travy a vytvorenie objektov na nich naviazanych.
+		*/
 		void drawOneFloor();
 
 		std::vector<Models::spFloor> mFloors;
