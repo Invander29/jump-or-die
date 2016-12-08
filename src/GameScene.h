@@ -37,7 +37,8 @@ namespace Scenes {
 		static const int FLOORS_COUNT = 24;
 		const float SPEED_CONS = 1.0;
 		const float RATIO = 2.0;
-		float diffStep;
+		const float DIFF_STEP = 0.1;
+		float mDiff;
 		int mDrawedRoads;
 		float cameraPos;
 		bool stopped;
