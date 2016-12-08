@@ -44,7 +44,16 @@ namespace Scenes {
 		 */
 		Camera& camera() { return mCamera; }
 
+		/**
+		 * Get light
+		 * @return reference to light
+		 */
 		Lighting::Light& light() { return mLight; }
+
+		/**
+		 * Get light
+		 * @return const reference to light
+		 */
 		const Lighting::Light& light() const { return mLight; }
 
 		/**

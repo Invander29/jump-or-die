@@ -36,8 +36,8 @@ void Mouse::onButtonUp(int button)
 void Mouse::onMove(double x, double y)
 {
 	mLastPosition = mPosition;
-	mPosition.x = x;
-	mPosition.y = y;
+	mPosition.x = static_cast<float>(x);
+	mPosition.y = static_cast<float>(y);
 }
 
 void Mouse::onNextFrame()

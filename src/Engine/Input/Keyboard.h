@@ -17,27 +17,30 @@ namespace Input {
 		explicit Keyboard();
 		~Keyboard();
 
+		/**
+		 * Listeners connected to GLFW callback events
+		 */
 		void onKeyDown(int key, int scancode);
 		void onKeyUp(int key, int scancode);
 		void onNextFrame();
 
 		/**
 		 * Check if key was clicked
-		 * @param keyCode Scancode of key
+		 * @param key code of key
 		 * @return true if key was clicked
 		 */
 		bool isKeyTriggered(int key) const;
 
 		/**
 		 * Check if key is pressed
-		 * @param keyCode Scancode of key
+		 * @param key code of key
 		 * @return true if key is pressed
 		 */
 		bool isKeyPressed(int key) const;
 
 		/**
 		 * Check if key was released
-		 * @param keyCode Scancode of key
+		 * @param key code of key
 		 * @return true if key was released
 		 */
 		bool isKeyReleased(int key) const;

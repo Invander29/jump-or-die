@@ -57,6 +57,7 @@ bool Application::initWindow()
 	}
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	// Speed penalty, disable on release mode
 #ifdef _DEBUG
@@ -162,6 +163,13 @@ bool Application::run()
 		// Clear
 		glClearColor(0.0f, 0.0f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		// Antialiasing (multisampling)
+		if (mMultisampling) {
+			glEnable(GL_MULTISAMPLE);
+		} else {
+			glDisable(GL_MULTISAMPLE);
+		}
 
 		glEnable(GL_DEPTH_TEST);
 		glDisable(GL_BLEND);

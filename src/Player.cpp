@@ -3,14 +3,16 @@
 #include <cmath>
 #include <tiny_obj_loader.h>
 
+#include "Engine/Application.h"
 #include "Engine/Input/Keyboard.h"
 #include "Engine/Application.h"
-#include "Engine/Utils/Message.h"
 #include "Engine/Utils/ModelLoader.h"
+#include "Images/Images.h"
 
+extern Image ImageMch;
 
 Player::Player(std::shared_ptr<Managers::ShaderManager::Program> program)
-	: ModelObj(program, "mch", "mch")
+	: ModelObj(program, ":Mch", &ImageMch)
 {
 	jumpAnimation = -1;
 	stopped = false;
@@ -39,7 +41,7 @@ void Player::update()
 	if (keyboard.isKeyTriggered(GLFW_KEY_SPACE) && !stopped) {
 		if (jumpAnimation > -1) //ak sa nestihne dokoncit animacia
 		{
-			moveZ(-2.0 / ANIM_STEPS * (ANIM_STEPS - jumpAnimation));
+			moveZ(-2.0f / ANIM_STEPS * (ANIM_STEPS - jumpAnimation));
 			setZ(round(z()));
 			setY(0.0);
 		}
@@ -48,8 +50,8 @@ void Player::update()
 	}
 	if (jumpAnimation > -1 && jumpAnimation<ANIM_STEPS) //animacia skoku
 	{
-		moveZ(-2.0/ ANIM_STEPS);
-		moveY(jumpAnimation<(ANIM_STEPS/2) ? (4.0 / (ANIM_STEPS / 2)) : (-4.0 / (ANIM_STEPS / 2)));
+		moveZ(-2.0f / ANIM_STEPS);
+		moveY(jumpAnimation<(ANIM_STEPS/2) ? (4.0f / (ANIM_STEPS / 2)) : (-4.0f / (ANIM_STEPS / 2)));
 		jumpAnimation++;
 	}
 	else

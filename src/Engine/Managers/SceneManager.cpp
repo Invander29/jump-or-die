@@ -38,9 +38,19 @@ void SceneManager::update()
 	 */
 	Application& app = Application::instance();
 	if (app.keyboard().isKeyTriggered(GLFW_KEY_1)) {
+		app.enableMultisampling(false);
 		app.setLightingMode(Lighting::Type::NONE);
 	} 
 	else if (app.keyboard().isKeyTriggered(GLFW_KEY_2)) {
+		app.enableMultisampling(true);
+		app.setLightingMode(Lighting::Type::NONE);
+	}
+	else if (app.keyboard().isKeyTriggered(GLFW_KEY_3)) {
+		app.enableMultisampling(false);
+		app.setLightingMode(Lighting::Type::PHONG);
+	}
+	else if (app.keyboard().isKeyTriggered(GLFW_KEY_4)) {
+		app.enableMultisampling(true);
 		app.setLightingMode(Lighting::Type::PHONG);
 	}
 

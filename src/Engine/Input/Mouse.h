@@ -17,6 +17,9 @@ namespace Input {
 		explicit Mouse();
 		~Mouse();
 
+		/**
+		 * Listeners connected to GLFW callback events
+		 */
 		void onButtonDown(int button);
 		void onButtonUp(int button);
 		void onMove(double x, double y);

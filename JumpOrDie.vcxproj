@@ -95,14 +95,14 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_GLFW_WGL;_GLFW_WIN32;_GLFW_USE_OPENGL;WIN32;_DEBUG;_WINDOWS;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -111,14 +111,14 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_GLFW_WGL;_GLFW_WIN32;_GLFW_USE_OPENGL;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -129,7 +129,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_GLFW_WGL;_GLFW_WIN32;_GLFW_USE_OPENGL;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -139,7 +139,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,7 +150,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_GLFW_WGL;_GLFW_WIN32;_GLFW_USE_OPENGL;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -159,11 +159,23 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3rdParty\src\gl3w\gl3w.c" />
+    <ClCompile Include="3rdParty\src\glfw\context.c" />
+    <ClCompile Include="3rdParty\src\glfw\init.c" />
+    <ClCompile Include="3rdParty\src\glfw\input.c" />
+    <ClCompile Include="3rdParty\src\glfw\monitor.c" />
+    <ClCompile Include="3rdParty\src\glfw\wgl_context.c" />
+    <ClCompile Include="3rdParty\src\glfw\win32_init.c" />
+    <ClCompile Include="3rdParty\src\glfw\win32_monitor.c" />
+    <ClCompile Include="3rdParty\src\glfw\win32_time.c" />
+    <ClCompile Include="3rdParty\src\glfw\win32_tls.c" />
+    <ClCompile Include="3rdParty\src\glfw\win32_window.c" />
+    <ClCompile Include="3rdParty\src\glfw\window.c" />
+    <ClCompile Include="3rdParty\src\glfw\winmm_joystick.c" />
     <ClCompile Include="3rdParty\src\lodepng\lodepng.cpp" />
     <ClCompile Include="3rdParty\src\tiny_obj_loader\tiny_obj_loader.cc" />
     <ClCompile Include="src\Car.cpp" />
@@ -185,7 +197,6 @@
     <ClCompile Include="src\Engine\Models\GameObject.cpp" />
     <ClCompile Include="src\Engine\Models\ModelObject.cpp" />
     <ClCompile Include="src\Engine\Models\ModelObj.cpp" />
-    <ClCompile Include="src\Engine\Models\Triangle.cpp" />
     <ClCompile Include="src\Engine\Scenes\Camera.cpp" />
     <ClCompile Include="src\Engine\Scenes\Scene.cpp" />
     <ClCompile Include="src\Engine\Utils\FileReader.cpp" />
@@ -193,9 +204,21 @@
     <ClCompile Include="src\Engine\Utils\Timer.cpp" />
     <ClCompile Include="src\Engine\Utils\Message.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
+    <ClCompile Include="src\Images\ImageCar.cpp" />
+    <ClCompile Include="src\Images\ImageFloor.cpp" />
+    <ClCompile Include="src\Images\Images.cpp" />
+    <ClCompile Include="src\Images\ImageMch.cpp" />
+    <ClCompile Include="src\Images\ImageTree.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Models\aut.obj.cpp" />
+    <ClCompile Include="src\Models\gameover.obj.cpp" />
+    <ClCompile Include="src\Models\mch.obj.cpp" />
+    <ClCompile Include="src\Models\press.obj.cpp" />
+    <ClCompile Include="src\Models\start.obj.cpp" />
+    <ClCompile Include="src\Models\strom.obj.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\TextGameOver.cpp" />
+    <ClCompile Include="src\TextPressSpace.cpp" />
     <ClCompile Include="src\TextStart.cpp" />
     <ClCompile Include="src\Tree.cpp" />
   </ItemGroup>
@@ -220,7 +243,6 @@
     <ClInclude Include="src\Engine\Models\GameObject.h" />
     <ClInclude Include="src\Engine\Models\ModelObject.h" />
     <ClInclude Include="src\Engine\Models\ModelObj.h" />
-    <ClInclude Include="src\Engine\Models\Triangle.h" />
     <ClInclude Include="src\Engine\Scenes\Camera.h" />
     <ClInclude Include="src\Engine\Scenes\Scene.h" />
     <ClInclude Include="src\Engine\Utils\Basics.h" />
@@ -229,8 +251,10 @@
     <ClInclude Include="src\Engine\Utils\Timer.h" />
     <ClInclude Include="src\Engine\Utils\Message.h" />
     <ClInclude Include="src\GameScene.h" />
+    <ClInclude Include="src\Images\Images.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\TextGameOver.h" />
+    <ClInclude Include="src\TextPressSpace.h" />
     <ClInclude Include="src\TextStart.h" />
     <ClInclude Include="src\Tree.h" />
   </ItemGroup>

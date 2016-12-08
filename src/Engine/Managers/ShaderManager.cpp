@@ -7,6 +7,18 @@
 #include "../Utils/Message.h"
 #include "../Application.h"
 
+// Shader built-in
+static const char* fragment_texture = "#version 330\nin vec2 TexCoord;uniform sampler2D texture;void main(void) {vec2 flipped_texcoord = vec2(TexCoord.x, 1.0 - TexCoord.y);gl_FragColor = texture2D(texture, flipped_texcoord);}";
+static const char* vertex_texture = "#version 330\nlayout(location = 0) in vec3 position;layout(location = 1) in vec3 normals;layout(location = 2) in vec2 texCoord;out vec2 TexCoord;uniform mat4 view;uniform mat4 model;\nvoid main(void) {gl_Position = view * model * vec4(position, 1.0);TexCoord = texCoord;}";
+static const char* fragment_texture_phong = "#version 330\nin vec3 FragPos;in vec3 Normal;in vec2 TexCoord;uniform vec3 lightPos;uniform vec3 lightColor;uniform vec3 viewPos;uniform sampler2D texture;\nvoid main(void) {vec2 flipped_texcoord = vec2(TexCoord.x, 1.0 - TexCoord.y);vec4 colorTexture = texture2D(texture, flipped_texcoord);float ambientStrenght = 0.1f;vec3 ambient = ambientStrenght * lightColor;vec3 norm = normalize(Normal);vec3 lightDir = normalize(lightPos - FragPos);float diff = max(dot(norm, lightDir), 0.0f);vec3 diffuse = diff * lightColor;float specularStrength = 0.5f;vec3 viewDir = normalize(viewPos - FragPos);vec3 reflectDir = reflect(-lightDir, norm);float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);vec3 specular = specularStrength * spec * lightColor;vec4 result = (vec4(ambient, 1.0f) + vec4(diffuse, 1.0f) + vec4(specular, 1.0f)) * colorTexture;gl_FragColor = vec4(result);}";
+static const char* vertex_texture_phong = "#version 330\nlayout(location = 0) in vec3 position;layout(location = 1) in vec3 normal;layout(location = 2) in vec2 texCoord;out vec2 TexCoord;out vec3 Normal;out vec3 FragPos;uniform mat4 view;uniform mat4 model;\nvoid main(void) {gl_Position = view * model * vec4(position, 1.0f);FragPos = vec3(model * vec4(position, 1.0f));Normal = mat3(transpose(inverse(model))) * normal;TexCoord = texCoord;}";
+
+static const char* fragment_color = "#version 330\nuniform vec3 color;\nvoid main(void) {gl_FragColor = vec4(color, 1.0);}";
+static const char* vertex_color = "#version 330\nlayout(location = 0) in vec3 position;layout(location = 1) in vec3 normal;uniform mat4 view;uniform mat4 model;\nvoid main(void) {gl_Position = view * model * vec4(position, 1.0f);}";
+static const char* fragment_color_phong = "#version 330\nin vec3 FragPos;in vec3 Normal;uniform vec3 lightPos;uniform vec3 lightColor;uniform vec3 viewPos;uniform vec3 color;\nvoid main(void) {float ambientStrenght = 0.1f;vec3 ambient = ambientStrenght * lightColor;vec3 norm = normalize(Normal);vec3 lightDir = normalize(lightPos - FragPos);float diff = max(dot(norm, lightDir), 0.0f);vec3 diffuse = diff * lightColor;float specularStrength = 0.5f;vec3 viewDir = normalize(viewPos - FragPos);vec3 reflectDir = reflect(-lightDir, norm);float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);vec3 specular = specularStrength * spec * lightColor;vec3 result = (ambient + diffuse + specular) * color;gl_FragColor = vec4(result, 1.0f);}";
+static const char* vertex_color_phong = "#version 330\nlayout(location = 0) in vec3 position;layout(location = 1) in vec3 normal;out vec3 Normal;out vec3 FragPos;uniform mat4 view;uniform mat4 model;\nvoid main(void) {gl_Position = view * model * vec4(position, 1.0f);FragPos = vec3(model * vec4(position, 1.0f));Normal = mat3(transpose(inverse(model))) * normal;}";
+
+
 using namespace std;
 using namespace Managers;
 using namespace Utils;
@@ -61,7 +73,7 @@ GLuint ShaderManager::createVertexShader(const std::string &filename)
 	}
 
 	Message::debug("Compiling Vertex Shader: %s", filename.c_str());
-	GLuint shaderId = createShader(mPath + filename, GL_VERTEX_SHADER);
+	GLuint shaderId = createShader((filename[0] == ':') ? filename : (mPath + filename), GL_VERTEX_SHADER);
 	if (shaderId == 0) {
 		return 0;
 	}
@@ -80,7 +92,7 @@ GLuint ShaderManager::createFragmentShader(const std::string &filename)
 	}
 
 	Message::debug("Compiling Fragment Shader: %s", filename.c_str());
-	GLuint shaderId = createShader(mPath + filename, GL_FRAGMENT_SHADER);
+	GLuint shaderId = createShader((filename[0] == ':') ? filename : (mPath + filename), GL_FRAGMENT_SHADER);
 	if (shaderId == 0) {
 		return 0;
 	}
@@ -147,16 +159,51 @@ std::shared_ptr<ShaderManager::Program> ShaderManager::get(const std::string &na
 	return mPrograms[name];
 }
 
-GLuint ShaderManager::createShader(const std::string &filename, GLenum type) {
-	Utils::FileReader fileReader;
-	std::string content = fileReader.readFile(filename);
-	if (content.empty()) {
-		Message::error(__FILE__, __LINE__, "Cannot open file %s", filename.c_str());
-		return 0;
+GLuint ShaderManager::createShader(const std::string &filename, GLenum type) 
+{
+	const char* shaderContent = nullptr;
+
+	// Test fif shader is built-in or not
+	if (filename[0] == ':') {
+		if (filename.compare(":simple_texture.fs") == 0) {
+			shaderContent = fragment_texture;
+		} 
+		else if (filename.compare(":simple_texture.vs") == 0) {
+			shaderContent = vertex_texture;
+		}
+		else if (filename.compare(":simple_color.fs") == 0) {
+			shaderContent = fragment_color;
+		}
+		else if (filename.compare(":simple_color.vs") == 0) {
+			shaderContent = vertex_color;
+		}
+		else if (filename.compare(":simple_texture_phong.fs") == 0) {
+			shaderContent = fragment_texture_phong;
+		}
+		else if (filename.compare(":simple_texture_phong.vs") == 0) {
+			shaderContent = vertex_texture_phong;
+		}
+		else if (filename.compare(":simple_color_phong.fs") == 0) {
+			shaderContent = fragment_color_phong;
+		}
+		else if (filename.compare(":simple_color_phong.vs") == 0) {
+			shaderContent = vertex_color_phong;
+		}
+		else {
+			return 0U;
+		}
+	} 
+	else {
+		Utils::FileReader fileReader;
+		std::string content = fileReader.readFile(filename);
+		if (content.empty()) {
+			Message::error(__FILE__, __LINE__, "Cannot open file %s", filename.c_str());
+			return 0;
+		}
+		shaderContent = content.c_str();
 	}
 
 	GLuint result = glCreateShader(type);
-	const char* shaderContent = content.c_str();
 	glShaderSource(result, 1, &shaderContent, nullptr);
 
 	GLint compileOK = GL_FALSE;

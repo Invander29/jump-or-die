@@ -9,6 +9,7 @@
 #include "Car.h"
 #include "TextGameOver.h"
 #include "TextStart.h"
+#include "TextPressSpace.h"
 
 namespace Scenes {
 
@@ -31,6 +32,7 @@ namespace Scenes {
 		spPlayer mPlayer;
 		spTextGameOver gameOver;
 		spTextStart startGame;
+		spTextPressSpace pressSpace;
 
 		static const int FLOORS_COUNT = 24;
 		const float SPEED_CONS = 1.0;
@@ -45,8 +47,7 @@ namespace Scenes {
 		std::shared_ptr<Managers::ShaderManager::Program> mProgramColor;
 		std::shared_ptr<Managers::ShaderManager::Program> mProgramTexture;
 
-		Graphics::spTexture mTextureFloor; 
-		Graphics::spTexture mTextureCube;
+		Graphics::spTexture mTextureFloor;
 	};
 
 	MAKE_SMART(GameScene);

@@ -26,8 +26,30 @@ namespace Graphics {
 		 */
 		bool fromFile(const std::string& filename);
 
+		/**
+		 * Load from data and register to OpenGL
+		 * @param name id of texture
+		 * @param data data of texture
+		 * @param width width of texture
+		 * @param height height of texture
+		 * @param format format of texture (number of bytes per pixel = 3 for RGB and 4 for RGBA)
+		 * @return true if success
+		 */
+		bool fromData(const std::string& name, unsigned char* data, unsigned int width, unsigned int height, unsigned int format);
+
+		/**
+		 * Get name of the texture
+		 */
 		const std::string& name() const { return mName; }
 
+		/**
+		 * Set name of the texture
+		 */
+		void setName(const std::string& name) { mName = name; }
+
+		/**
+		 * Set filters for texture
+		 */
 		void setFilter(GLenum minFilter, GLenum magFilter);
 
 		/**
@@ -56,10 +78,29 @@ namespace Graphics {
 		 */
 		void generateMipMap(GLenum minFilter = GL_NEAREST_MIPMAP_NEAREST, GLenum magFilter = GL_NEAREST_MIPMAP_NEAREST);
 
+		/**
+		 * Get ID of texture in OpenGL
+		 */
 		GLuint id() const { return mId; }
+
+		/**
+		 * Get Width of texture
+		 */
 		int width() const { return mWidth; }
+
+		/**
+		 * Get height of texture
+		 */
 		int height() const { return mHeight; }
+
+		/**
+		 * Get format of texture
+		 */
 		GLenum format() const { return mFormat; }
+
+		/**
+		 * Get type of data in texture
+		 */
 		GLenum type() const { return mType; }
 
 	private:

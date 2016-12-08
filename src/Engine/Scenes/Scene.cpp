@@ -50,6 +50,11 @@ void Scene::draw()
 
 void Scene::show()
 {
+	// If paused, resume
+	if (isPaused()) {
+		resume();
+	}
+
 	Message::debug("Scene show");
 }
 
@@ -68,4 +73,12 @@ void Scene::pause()
 void Scene::hide()
 {
 	Message::debug("Scene hide");
+
+	// Pause if not paused yet
+	if (!isPaused()) {
+		pause();
+	}
+
+	// Clear objects
+	mObjects.clear();
 }

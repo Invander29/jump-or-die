@@ -1,10 +1,12 @@
 ﻿#include "Car.h"
 #include "Engine/Application.h"
+#include "Images/Images.h"
 
 const float Car::AREA_X = 24;
+extern Image ImageCar;
 
 Car::Car(std::shared_ptr<Managers::ShaderManager::Program> program, bool fromRight, float delayTime, float waitTime, float speed)
-	: ModelObj(program, "aut", "aut"), mFromRight(fromRight), 
+	: ModelObj(program, ":Car", &ImageCar), mFromRight(fromRight), 
 		mTime(-delayTime), mWaitTime(waitTime), mSpeed(speed)
 {
 	// Create on one side or other

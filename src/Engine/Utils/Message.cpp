@@ -116,6 +116,7 @@ int Message::error(const char* file, int line, int code, const char* format, ...
 
 void Message::debug(const char* format, ...)
 {
+#ifdef _DEBUG
 	fprintf(stdout, "Debug: ");
 
 	va_list argptr;
@@ -140,4 +141,5 @@ void Message::debug(const char* format, ...)
 		fprintf(f, "\n");
 		fclose(f);
 	}
+#endif
 }

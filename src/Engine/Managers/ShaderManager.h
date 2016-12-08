@@ -26,6 +26,9 @@ namespace Managers {
 			int counter = 1;
 		};
 
+		/**
+		 * Helper for program (wihtout lighting, with phong lighting and mayby more)
+		 */
 		class ProgramPart
 		{
 		public:
@@ -128,6 +131,13 @@ namespace Managers {
 		 */
 		GLuint createShader(const std::string& filename, GLenum type);
 
+		/**
+		 * Create program with it's name from vertex shader and fragment shader
+		 * @param name name of program
+		 * @param vs vertex shader
+		 * @param fs fragment shader
+		 * @return nullptr on error or program part
+		 */
 		std::shared_ptr<ProgramPart> createProgram(const std::string& name, const std::string& vs, const std::string& fs);
 
 		/**

@@ -6,6 +6,7 @@
 #include "Engine/Utils/Message.h"
 #include "Engine/Application.h"
 #include "GameScene.h"
+#include "Engine/Utils/ModelLoader.h"
 
 using namespace Utils;
 

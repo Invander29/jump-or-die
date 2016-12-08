@@ -82,8 +82,23 @@ public:
 	 */
 	Input::Mouse& mouse() { return mMouse; }
 
+	/**
+	 * Set lighting mode
+	 * @param lightMode none/phong
+	 */
 	void setLightingMode(Lighting::Type lightMode) { mLightingMode = lightMode; }
+
+	/**
+	 * Get lighting mode
+	 * @return lightingMode (none/phong)
+	 */
 	Lighting::Type lightingMode() const { return mLightingMode; }
+
+	/**
+	 * Enable or disable multisampling
+	 * @param aEnable true for enable
+	 */
+	void enableMultisampling(bool aEnable) { mMultisampling = aEnable; }
 
 private:
 	// Inits
@@ -104,7 +119,7 @@ private:
 	 */
 	void release();
 
-
+	bool mMultisampling = true;
 	double mSpeed = 1.0 / 100.0;
 
 	int mWidth = -1;

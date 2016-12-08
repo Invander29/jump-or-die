@@ -3,6 +3,7 @@
 #include <GL/gl3w.h>
 #include <glm/glm.hpp>
 #include <memory>
+#include <cstring>
 
 #include "../Utils/Basics.h"
 #include "../Lighting/LightTypes.h"

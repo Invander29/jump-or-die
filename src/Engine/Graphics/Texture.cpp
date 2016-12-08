@@ -35,6 +35,26 @@ bool Graphics::Texture::fromFile(const std::string &filename)
 	return true;
 }
 
+bool Graphics::Texture::fromData(const std::string& name, unsigned char* data, 
+	unsigned int width, unsigned int height, unsigned int format)
+{
+	mName = name;
+	mWidth = width;
+	mHeight = height;
+
+	if (format == 3) {
+		mFormat = GL_RGB;
+	} else if (format == 4) {
+		mFormat = GL_RGBA;
+	} else {
+		return false;
+	}
+
+	registerSelf(data);
+
+	Message::debug("Texture (data) is registered as: %s / %d", mName.c_str(), mId);
+	return true;
+}
 
 void Graphics::Texture::setFilter(GLenum minFilter, GLenum magFilter)
 {

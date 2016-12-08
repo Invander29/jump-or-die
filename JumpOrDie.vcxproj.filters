@@ -49,6 +49,15 @@
     <Filter Include="Game\Texts">
       <UniqueIdentifier>{74f12183-4bbb-4b80-8441-baaa224bbd6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rdParty\glfw">
+      <UniqueIdentifier>{48f97e19-9610-4328-a8b8-74939fed8f41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Images">
+      <UniqueIdentifier>{50ae4f62-adec-4954-80ec-ca70a8ff31ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{ac66ec23-8517-4c4a-8a24-385025299f23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Utils\FileReader.cpp">
@@ -123,9 +132,6 @@
     <ClCompile Include="src\GameScene.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\Models\Triangle.cpp">
-      <Filter>Engine\Models</Filter>
-    </ClCompile>
     <ClCompile Include="src\Car.cpp">
       <Filter>Game\Objects</Filter>
     </ClCompile>
@@ -155,6 +161,78 @@
     </ClCompile>
     <ClCompile Include="src\TextStart.cpp">
       <Filter>Game\Texts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextPressSpace.cpp">
+      <Filter>Game\Texts</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\src\glfw\win32_monitor.c">
+      <Filter>3rdParty\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\src\glfw\win32_time.c">
+      <Filter>3rdParty\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\src\glfw\win32_tls.c">
+      <Filter>3rdParty\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\src\glfw\win32_window.c">
+      <Filter>3rdParty\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\src\glfw\window.c">
+      <Filter>3rdParty\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\src\glfw\winmm_joystick.c">
+      <Filter>3rdParty\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\src\glfw\context.c">
+      <Filter>3rdParty\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\src\glfw\init.c">
+      <Filter>3rdParty\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\src\glfw\input.c">
+      <Filter>3rdParty\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\src\glfw\monitor.c">
+      <Filter>3rdParty\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\src\glfw\wgl_context.c">
+      <Filter>3rdParty\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\src\glfw\win32_init.c">
+      <Filter>3rdParty\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Images\ImageFloor.cpp">
+      <Filter>Images</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Images\Images.cpp">
+      <Filter>Images</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Images\ImageCar.cpp">
+      <Filter>Images</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Images\ImageMch.cpp">
+      <Filter>Images</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Images\ImageTree.cpp">
+      <Filter>Images</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Models\strom.obj.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Models\aut.obj.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Models\gameover.obj.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Models\mch.obj.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Models\press.obj.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Models\start.obj.cpp">
+      <Filter>Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,9 +302,6 @@
     <ClInclude Include="src\GameScene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Models\Triangle.h">
-      <Filter>Engine\Models</Filter>
-    </ClInclude>
     <ClInclude Include="src\Car.h">
       <Filter>Game\Objects</Filter>
     </ClInclude>
@@ -256,6 +331,12 @@
     </ClInclude>
     <ClInclude Include="src\TextStart.h">
       <Filter>Game\Texts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextPressSpace.h">
+      <Filter>Game\Texts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Images\Images.h">
+      <Filter>Images</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

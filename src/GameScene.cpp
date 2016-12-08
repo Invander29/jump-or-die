@@ -1,27 +1,37 @@
+#include "GameScene.h"
+
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
 #include <algorithm> 
-#include "GameScene.h"
-#include "Engine/Models/CubeTexture.h"
+
 #include "Engine/Application.h"
-#include "Engine/Models/Floor.h"
-#include "Engine/Models/CubeColor.h"
 #include "Engine/Models/FloorColor.h"
 #include "Engine/Models/FloorTexture.h"
-#include "Engine/Models/Triangle.h"
 #include "Car.h"
 #include "Tree.h"
 #include "Engine/Utils/Message.h"
 
+#include "Images/Images.h"
 
 using namespace Scenes;
 using namespace Utils;
+using namespace Models;
+using namespace Graphics;
+
+extern Image ImageFloor;
 
 GameScene::GameScene()
 {
-}
+	// Shaders init
+	mProgramTexture = Application::instance().shaderManager().get("simple_texture", ":simple_texture", ":simple_texture");
+	mProgramColor = Application::instance().shaderManager().get("simple_color", ":simple_color", ":simple_color");
+	mTextureFloor = Application::instance().resourceManager().texture("floor", &ImageFloor);
 
+	// Some default settings
+	Application::instance().setLightingMode(Lighting::Type::PHONG);
+	Application::instance().enableMultisampling(true);
+}
 
 GameScene::~GameScene()
 {
@@ -33,58 +43,42 @@ GameScene::~GameScene()
 		Application::instance().shaderManager().remove(mProgramColor->name());
 	}
 
-	if (mTextureCube) {
-		Application::instance().resourceManager().deleteTexture(mTextureCube->name());
-	}
-
 	if (mTextureFloor) {
 		Application::instance().resourceManager().deleteTexture(mTextureFloor->name());
 	}
 }
 
-void GameScene::show() {
+void GameScene::show() 
+{
 	Scene::show();
-	// Set light
-	mLight.setPosition(0.0f, 10.0f, 0.0f);
-	mLight.setColor(1, 1, 1);
-	Application::instance().setLightingMode(Lighting::Type::PHONG);
-
-	// Add camera object
-	Camera camera(45.0f, 0.1f, 100.0f);
-	/*camera.lookAt(glm::vec3(2.0f, 25.0f, 3.0f),  // Camera is in this position
-		glm::vec3(0.0f, 0.0f, -12.0f));// Camera looks at this position)*/
-	camera.setPosition(3.0f, 25.0f, 3.0f);
-	camera.lookUp(-55.0f);
-	camera.lookRight(-7.0f);
-	setCamera(camera);
+	
 	cameraPos = 0.0; //pocitadlo na poziciu kamery
 	stopped = false;
 	gameover = false;
 	started = false;
 	diffStep = 0.1f; //sluzi na zvacsovanie rychlosti pohybu kamery a aut, co zvysuje narocnost
+	mDrawedRoads = 0;
 
-	// Add objects to scene
-	using namespace Models;
-	using namespace Graphics;
+	// Set light
+	mLight.setPosition(0.0f, 10.0f, 0.0f);
+	mLight.setColor(1, 1, 1);
 
-	// Shaders init
-	mProgramTexture = Application::instance().shaderManager().get("simple_texture", "simple_texture", "simple_texture");
-	mProgramColor = Application::instance().shaderManager().get("simple_color", "simple_color", "simple_color");
-	mTextureCube = Application::instance().resourceManager().texture("cube.png");
-	mTextureFloor = Application::instance().resourceManager().texture("floor.png");
-	
+	// Add camera object
+	Camera camera(45.0f, 0.1f, 100.0f);
+	camera.setPosition(3.0f, 25.0f, 3.0f);
+	camera.lookUp(-55.0f);
+	camera.lookRight(-7.0f);
+	setCamera(camera);
 
 	// Test trees
 	// TODO Just a tree test (modify / remove)
 	for (int i=0; i<20; ++i) {
 		for (int a = 0; a < 2; ++a) {
 			spTree tree = SMART(Tree, mProgramTexture);
-			tree->setPosition((a*2 - 1) *  15, 0, -i*2);
+			tree->setPosition((a*2 - 1) *  15.0f, 0, -i*2.0f);
 			add(tree);
 		}
 	}
-
-	// Test of texts
 
 	// Player
 	mPlayer = std::make_shared<Player>(mProgramTexture);
@@ -92,22 +86,26 @@ void GameScene::show() {
 	add(mPlayer);
 
 	// Texts
-	startGame = SMART(TextStart, mProgramTexture);
-	startGame->setPosition(0, 5, cameraPos*(-RATIO) - 13.0);
+	startGame = SMART(TextStart, mProgramColor);
+	startGame->setPosition(0, 5, cameraPos*(-RATIO) - 13.0f);
 	add(startGame);
 
-	gameOver = SMART(TextGameOver, mProgramTexture);
+	gameOver = SMART(TextGameOver, mProgramColor);
+	pressSpace = SMART(TextPressSpace, mProgramColor);
 
 	//Generate map
-	mFloors.push_back(std::make_shared<FloorTexture>(mProgramTexture, 25.0f, 1.0f, 0.0f, mTextureFloor->id()));
-	mFloors.back()->setPosition(0.0, 0.0, (mFloors.size() - 1)*(-RATIO));
-	add(mFloors.back());
+	spFloorTexture floor = std::make_shared<FloorTexture>(mProgramTexture, 25.0f, 1.0f, 0.0f, mTextureFloor->id());
+	mFloors.push_back(floor);
+	floor->setPosition(0.0, 0.0, (mFloors.size() - 1)*(-RATIO));
+	add(floor);
 	for (int i = 0; i < 3; i++)
 	{
-		mFloors.push_back(std::make_shared<FloorColor>(mProgramColor, 25.0f, 1.0f, 0.0f, 0.6f, 0.6f, 0.6f));
-		mFloors.back()->setPosition(0, 0.0, (mFloors.size() - 1)*(-RATIO));
-		add(mFloors.back());
-		bool carsDirection = rand() % 2;
+		spFloorColor floor2 = std::make_shared<FloorColor>(mProgramColor, 25.0f, 1.0f, 0.0f, 0.6f, 0.6f, 0.6f);
+		mFloors.push_back(floor2);
+		floor2->setPosition(0, 0.0, (mFloors.size() - 1)*(-RATIO));
+		add(floor2);
+
+		bool carsDirection = rand() % 2 != 0;
 		float carsSpeed = ((float)rand() / (RAND_MAX / 10)) + 1.0f;
 		int count = rand() % 3 + 2;
 		std::vector<int> positions;
@@ -115,15 +113,18 @@ void GameScene::show() {
 		std::random_shuffle(positions.begin(), positions.end());
 		for (int i = 0; i < count; i++) //generovani aut na danej ceste
 		{
-			mCars.push_back(std::make_shared<Car>(mProgramTexture, carsDirection, 0.0f, 0.0f, carsSpeed)); //pridanie auta do zoznamu aut
-			mCars.back()->setPosition((float)positions[i], -0.3, (mFloors.size() - 1)*(-RATIO) + 0.35);
-			add(mCars.back());
+			spCar car = std::make_shared<Car>(mProgramTexture, carsDirection, 0.0f, 0.0f, carsSpeed);
+			mCars.push_back(car); //pridanie auta do zoznamu aut
+			car->setPosition((float)positions[i], -0.3f, (mFloors.size() - 1)*(-RATIO) + 0.35f);
+			add(car);
 		}
-		mFloors.push_back(std::make_shared<FloorTexture>(mProgramTexture, 25.0f, 1.0f, 0.0f, mTextureFloor->id()));
-		mFloors.back()->setPosition(0.0, 0.0, (mFloors.size() - 1)*(-RATIO));
-		add(mFloors.back());
+
+		spFloorTexture floor3 = std::make_shared<FloorTexture>(mProgramTexture, 25.0f, 1.0f, 0.0f, mTextureFloor->id());
+		mFloors.push_back(floor3);
+		floor3->setPosition(0.0f, 0.0f, (mFloors.size() - 1)*(-RATIO));
+		add(floor3);
 	}
-	mDrawedRoads = 0;
+	
 	srand(int(time(NULL)));
 	for (int i = 0; i < FLOORS_COUNT - 3; i++)
 	{
@@ -131,73 +132,18 @@ void GameScene::show() {
 	}
 }
 
-void GameScene::update() {
+void GameScene::update() 
+{
 	Scene::update();
 	float moveLen;
 
 	Application& app = Application::instance();
-	float cameraSpeed = 45.0f;
 
-	if (app.keyboard().isKeyPressed(GLFW_KEY_J)) {
-		camera().lookRight(-cameraSpeed * app.speed());
-
-	}
-	else if (app.keyboard().isKeyPressed(GLFW_KEY_L)) {
-		camera().lookRight(cameraSpeed * app.speed());
-	}
-
-	if (app.keyboard().isKeyPressed(GLFW_KEY_I)) {
-		camera().lookUp(cameraSpeed * app.speed());
-
-	}
-	else if (app.keyboard().isKeyPressed(GLFW_KEY_K)) {
-		camera().lookUp(-cameraSpeed * app.speed());
-	}
-
-	if (app.keyboard().isKeyPressed(GLFW_KEY_O)) {
-		camera().lookSide(cameraSpeed * app.speed());
-
-	}
-	else if (app.keyboard().isKeyPressed(GLFW_KEY_P)) {
-		camera().lookSide(-cameraSpeed * app.speed());
-	}
-
-	if (app.keyboard().isKeyPressed(GLFW_KEY_A)) {
-		camera().moveRight(3 * app.speed());
-
-	}
-	else if (app.keyboard().isKeyPressed(GLFW_KEY_D)) {
-		camera().moveRight(-3 * app.speed());
-	}
-
-	if (app.keyboard().isKeyPressed(GLFW_KEY_W)) {
-		camera().moveUp(3 * app.speed());
-
-	}
-	else if (app.keyboard().isKeyPressed(GLFW_KEY_S)) {
-		camera().moveUp(-3 * app.speed());
-	}
-
-	if (app.keyboard().isKeyPressed(GLFW_KEY_R)) {
-		moveLen = 5 * app.speed();
-		camera().moveForward(moveLen*2.0);
-		mLight.setPosition(mLight.position()[0], mLight.position()[1], mLight.position()[2] - (moveLen*2.0));
-		cameraPos += moveLen;
-	}
-	else if (app.keyboard().isKeyPressed(GLFW_KEY_F)) {
-		moveLen = -5 * app.speed();
-		camera().moveForward(moveLen*2.0);
-		mLight.setPosition(mLight.position()[0], mLight.position()[1], mLight.position()[2] - (moveLen*2.0));
-		cameraPos += moveLen;
-	}
-
-	if (app.keyboard().isKeyTriggered(GLFW_KEY_X)) {
-		stopped=!stopped;
-	}
-
+	// If game over, clear scene (hide) and show it again
 	if (gameover && app.keyboard().isKeyTriggered(GLFW_KEY_SPACE)) {
-		Scenes::spGameScene scene = std::make_shared<Scenes::GameScene>(); //TODO PAVEL
-		Application::instance().sceneManager().set(scene);
+		hide();
+		show();
+		return;
 	}
 
 	if (!started && app.keyboard().isKeyTriggered(GLFW_KEY_SPACE)) {
@@ -235,7 +181,7 @@ void GameScene::update() {
 
 				Message::debug("GAME OVER"); //TODO konec hry
 				mPlayer->gameover();
-				gameOver->setPosition(0, 5, cameraPos*(-RATIO) - 13.0);
+				gameOver->setPosition(0, 5, cameraPos*(-RATIO) - 13.0f);
 				add(gameOver);
 				gameover = true;
 				stopped = true;
@@ -243,7 +189,7 @@ void GameScene::update() {
 				{
 					carstop->gameover();
 				}
-				gameOver->setPosition(0, 5, cameraPos*(-RATIO) - 13.0);
+				gameOver->setPosition(0, 5, cameraPos*(-RATIO) - 13.0f);
 				add(gameOver);
 			}
 		}
@@ -252,7 +198,7 @@ void GameScene::update() {
 		{
 			Message::debug("GAME OVER"); //TODO konec hry
 			mPlayer->gameover();
-			gameOver->setPosition(0, 5, cameraPos*(-RATIO) - 13.0);
+			gameOver->setPosition(0, 5, cameraPos*(-RATIO) - 13.0f);
 			add(gameOver);
 			gameover = true;
 			stopped = true;
@@ -270,11 +216,13 @@ void GameScene::drawOneFloor()
 	using namespace Graphics;
 	if (mDrawedRoads < 3 && (mDrawedRoads == 0 || rand() % 2 == 0))
 	{
-		mFloors.push_back(std::make_shared<FloorColor>(mProgramColor, 25.0f, 1.0f, 0.0f, 0.05 * (mDrawedRoads % 2) + 0.6, 0.05 * (mDrawedRoads % 2) + 0.6, 0.05 * (mDrawedRoads % 2) + 0.6));
-		mFloors.back()->setPosition(0, 0, (mFloors.size() - 1)*(-RATIO));
-		add(mFloors.back());
+		spFloorColor floor = std::make_shared<FloorColor>(mProgramColor, 25.0f, 1.0f, 0.0f, 0.05f * (mDrawedRoads % 2) + 0.6f, 0.05f * (mDrawedRoads % 2) + 0.6f, 0.05f * (mDrawedRoads % 2) + 0.6f);
+		mFloors.push_back(floor);
+		floor->setPosition(0, 0, (mFloors.size() - 1)*(-RATIO));
+		add(floor);
+
 		mDrawedRoads++;
-		bool carsDirection = rand() % 2;
+		bool carsDirection = rand() % 2 != 0;
 		float carsSpeed = ((float)rand() / (RAND_MAX / 10)) + 1.0f + diffStep;
 		int count = rand() % 3 + 2;
 		std::vector<int> positions;
@@ -282,19 +230,21 @@ void GameScene::drawOneFloor()
 		std::random_shuffle(positions.begin(), positions.end());
 		for (int i = 0; i < count; i++) //generovani aut na danej ceste
 		{
-			mCars.push_back(std::make_shared<Car>(mProgramTexture, carsDirection, 0.0f, 0.0f, carsSpeed)); //pridanie auta do zoznamu aut
-			mCars.back()->setPosition((float)positions[i], -0.3, (mFloors.size() - 1)*(-RATIO) + 0.35);
-			add(mCars.back());
+			spCar car = std::make_shared<Car>(mProgramTexture, carsDirection, 0.0f, 0.0f, carsSpeed);
+			mCars.push_back(car); //pridanie auta do zoznamu aut
+			car->setPosition((float)positions[i], -0.3f, (mFloors.size() - 1)*(-RATIO) + 0.35f);
+			add(car);
 		}
 	}
 	else
 	{
-		mFloors.push_back(std::make_shared<FloorTexture>(mProgramTexture, 25.0f, 1.0f, 0.0f, mTextureFloor->id()));
-		mFloors.back()->setPosition(0, 0, (mFloors.size() - 1)*(-RATIO));
-		add(mFloors.back());
+		spFloorTexture floor = std::make_shared<FloorTexture>(mProgramTexture, 25.0f, 1.0f, 0.0f, mTextureFloor->id());
+		mFloors.push_back(floor);
+		floor->setPosition(0, 0, (mFloors.size() - 1)*(-RATIO));
+		add(floor);
 		mDrawedRoads = 0;
 	}
-	diffStep += 0.1;
+	diffStep += 0.1f;
 }
 
 void GameScene::resume() 
@@ -310,4 +260,11 @@ void GameScene::pause()
 void GameScene::hide() 
 {
 	Scene::hide();
+
+	// Clear scene objects
+	mFloors.clear();
+	mCars.clear();
+	mPlayer = nullptr;
+	gameOver = nullptr;
+	startGame = nullptr;
 }
